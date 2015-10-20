@@ -152,11 +152,11 @@ public static  function permutation(n:Int, m:Int) {
 
 
 // beta function
-public static  function betafn(x:Float, y:Float):Float {
+public static  function betafn(x:Float, y:Float):Null<Float> {
   // ensure arguments are positive
   if (x <= 0 || y <= 0)
-	throw "args must be positive";
-    return Math.NEGATIVE_INFINITY;
+	
+    return null;
   // make sure x + y doesn't exceed the upper limit of usable values
   return (x + y > 170)
       ? Math.exp(betaln(x, y))
@@ -273,7 +273,7 @@ public static  function gammapinv(p:Float, a:Float) {
 
 // Returns the error function erf(x)
 public static  function erf(x:Float) {
-  var cof = [-1.3026537197817094, 6.4196979235649026e-1, 1.9476473204185836e-2,
+  var cof:Array<Float> = [-1.3026537197817094, 6.4196979235649026e-1, 1.9476473204185836e-2,
              -9.561514786808631e-3, -9.46595344482036e-4, 3.66839497852761e-4,
              4.2523324806907e-5, -2.0278578112534e-5, -1.624290004647e-6,
              1.303655835580e-6, 1.5626441722e-8, -8.5238095915e-8,
@@ -297,10 +297,12 @@ public static  function erf(x:Float) {
   t = 2 / (2 + x);
   ty = 4 * t - 2;
 
-  for(j in j ... 0) {
+  while(j>0)  {
+	 
     tmp = d;
     d = ty * d - dd + cof[j];
     dd = tmp;
+	j--;
   }
 
   res = t * Math.exp(-x * x + 0.5 * (cof[0] + ty * d) - dd);
@@ -309,7 +311,7 @@ public static  function erf(x:Float) {
 
 
 // Returns the complmentary error function erfc(x)
-public static  function erfc(x) {
+public static  function erfc(x):Float {
   return 1 - erf(x);
 };
 
@@ -317,18 +319,20 @@ public static  function erfc(x) {
 // Returns the inverse of the complementary error function
 public static  function erfcinv(p:Float):Float {
   var j = 0;
-  var x:Float, err, t, pp;
+  var x:Float, err, t, pp:Float;
   if (p >= 2)
     return -100;
   if (p <= 0)
     return 100;
   pp = (p < 1) ? p : 2 - p;
+
   t = Math.sqrt(-2 * Math.log(pp / 2));
   x = -0.70711 * ((2.30753 + t * 0.27061) /
                   (1 + t * (0.99229 + t * 0.04481)) - t);
-  for (j in j...j ) {
+  while (j++ < 2) {
     err = erfc(x) - pp;
-    x += err / (1.12837916709551257 * Math.exp(-x * x) - x * err);
+    x += err / (1.12837916709551257 * Math.exp( -x * x) - x * err);
+	
   }
   return (p < 1) ? x : -x;
 };

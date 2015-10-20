@@ -1,8 +1,10 @@
 package hstat.tests;
 
 import hstat.tests.distribution.Beta_test;
+import hstat.tests.distribution.Normal_test;
 import hstat.tests.special.Gammafn_test;
 import hstat.tests.special.Gammap_test;
+import hstat.tests.special.General_test;
 import hstat.tests.special.LowRegGamma_test;
 import openfl.system.System;
 import utest.Runner;
@@ -24,9 +26,11 @@ class Tests
 		runner.addCase(new Gammafn_test());
 		runner.addCase(new Gammap_test());
 		runner.addCase(new LowRegGamma_test());
+		runner.addCase(new General_test());
 		
 		//Distributions
 		runner.addCase(new Beta_test());
+		runner.addCase(new Normal_test());
 
 		Report.create(runner, NeverShowSuccessResults, AlwaysShowHeader);
 		

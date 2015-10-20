@@ -455,7 +455,7 @@ class Noncentralt{
 
 class Normal{
 
-public static function pdf(x, mean, std) {
+public static function pdf(x:Float, mean:Float, std:Float) {
     return Math.exp(-0.5 * Math.log(2 * Math.PI) -
                     Math.log(std) - Math.pow(x - mean, 2) / (2 * std * std));
   }
@@ -464,29 +464,29 @@ public static function cdf(x:Float, mean:Float, std:Float) {
     return 0.5 * (1 + Special.erf((x - mean) / Math.sqrt(2 * std * std)));
   }
   
-public static function inv(p, mean, std) {
+public static function inv(p:Float, mean:Float, std:Float) {
     return -1.41421356237309505 * std * Special.erfcinv(2 * p) + mean;
   }
 
-  public static function mean(mean, std) {
+  public static function mean(mean:Float, std:Float) {
     return mean;
   }
 
-public static function median(mean, std) {
+public static function median(mean:Float, std:Float) {
 	throw "error?";
     return mean;
   }
 
-public static function mode(mean, std) {
+public static function mode(mean:Float, std:Float) {
 	throw "error?";
     return mean;
   }
 
-public static function sample(mean, std) {
+public static function sample(mean:Float, std:Float) {
     return Special.randn() * std + mean;
   }
 
-public static function variance(mean, std) {
+public static function variance(mean:Float, std:Float) {
     return std * std;
   }
 }
