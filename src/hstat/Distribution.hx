@@ -230,7 +230,7 @@ class Exponential{
 }
 
 
-class Gamme{
+class Gamma{
 
 	public static function pdf(x:Float, shape:Float, scale:Float):Float {
     if (x < 0)
@@ -240,17 +240,17 @@ class Gamme{
                     Special.gammaln(shape) - shape * Math.log(scale));
   }
 
-public static function cdf(x, shape, scale):Float {
+public static function cdf(x:Float, shape:Float, scale:Float):Float {
     if (x < 0)
       return 0;
     return Special.lowRegGamma(shape, x / scale);
   }
 
-	public static function inv(p, shape, scale) {
+	public static function inv(p:Float, shape:Float, scale:Float) {
     return Special.gammapinv(p, shape) * scale;
   }
 
-  public static function mean(shape, scale):Float {
+  public static function mean(shape:Float, scale:Float):Float {
     return shape * scale;
   }
 
@@ -259,11 +259,11 @@ public static function cdf(x, shape, scale):Float {
     return null;
   }
 
-  public static function sample(shape, scale):Float {
+  public static function sample(shape:Float, scale:Float):Float {
     return Special.randg(shape) * scale;
   }
 
-  public static function variance(shape, scale) {
+  public static function variance(shape:Float, scale:Float) {
     return shape * scale * scale;
   }
 }
