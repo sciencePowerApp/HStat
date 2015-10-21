@@ -52,5 +52,14 @@ class General_test
 		Assert.floatEquals(Special.combinationln(8, 3), 4.025351690735387);
 	}
 	
+	public function test_ibeta() {
+		Assert.floatEquals(Special.ibeta(.5,.5,.5), 0.5000000180073509);
+	}
+	
+	public function test_betac() {
+		Assert.floatEquals(Special.betacf(.5,.5,.5), 1.5707962702232705);
+	}
+	
+	
 	
 }

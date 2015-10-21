@@ -397,14 +397,16 @@ public static function ibeta(x:Float, a:Float, b:Float):Float {
     Math.exp(gammaln(a + b) - gammaln(a) -
              gammaln(b) + a * Math.log(x) + b *
              Math.log(1 - x));
-  if (x < 0 || x > 1)
-    //return false;
-	throw "not implemented";
-	return Math.NEGATIVE_INFINITY;
+			
+  if (x < 0 || x > 1){
+	throw "illegal parameter?";
+  }
+  
   if (x < (a + 1) / (a + b + 2))
     // Use continued fraction directly.
     return bt * betacf(x, a, b) / a;
   // else use continued fraction after making the symmetry transformation.
+
   return 1 - bt * betacf(1 - x, b, a) / b;
 };
 
