@@ -269,36 +269,36 @@ public static function cdf(x:Float, shape:Float, scale:Float):Float {
 }
 
 class Invgamma{
-public static function pdf(x, shape, scale):Float {
+public static function pdf(x:Float, shape:Float, scale:Float):Float {
     if (x <= 0)
       return 0;
     return Math.exp(-(shape + 1) * Math.log(x) - scale / x -
                     Special.gammaln(shape) + shape * Math.log(scale));
   }
 
-public static function cdf(x, shape, scale):Float {
+public static function cdf(x:Float, shape:Float, scale:Float):Float {
     if (x <= 0)
       return 0;
     return 1 - Special.lowRegGamma(shape, scale / x);
   }
 
-public static function inv(p, shape, scale) {
+public static function inv(p:Float, shape:Float, scale:Float) {
     return scale / Special.gammapinv(1 - p, shape);
   }
 
-public static  function mean(shape, scale):Null<Float> {
+public static  function mean(shape:Float, scale:Float):Null<Float> {
     return (shape > 1) ? scale / (shape - 1) : null;
   }
 
- public static  function mode(shape, scale) {
+ public static  function mode(shape:Float, scale:Float) {
     return scale / (shape + 1);
   }
 
-public static function sample(shape, scale) {
+public static function sample(shape:Float, scale:Float) {
     return scale / Special.randg(shape);
   }
 
-public static  function variance(shape, scale):Null<Float> {
+public static  function variance(shape:Float, scale:Float):Null<Float> {
     if (shape <= 2)
       return null;
     return scale * scale / ((shape - 1) * (shape - 1) * (shape - 2));
