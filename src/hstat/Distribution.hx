@@ -402,7 +402,7 @@ class Lognormal{
 
 class Noncentralt{
 
-	public static function pdf(x, dof, ncp) {
+	public static function pdf(x:Float, dof:Float, ncp:Float):Float {
     var tol = 1e-14;
     if (Math.abs(ncp) < tol)  // ncp approx 0; use student-t
       return Studentt.pdf(x, dof);
@@ -538,7 +538,7 @@ public static function variance(scale, shape):Null<Float> {
 
 class Studentt{
 
-public static function pdf(x, dof) {
+public static function pdf(x:Float, dof:Float):Float {
     dof = dof > 1e100 ? 1e100 : dof;
     return (1/(Math.sqrt(dof) * Special.betafn(0.5, dof/2))) *
         Math.pow(1 + ((x * x) / dof), -((dof + 1) / 2));
@@ -550,29 +550,29 @@ public static function cdf(x:Float, dof:Float):Float {
                        (2 * Math.sqrt(x * x + dof)), dof2, dof2);
   }
 
-public static function inv(p, dof) {
+public static function inv(p:Float, dof:Float):Float {
     var x = Special.ibetainv(2 * Math.min(p, 1 - p), 0.5 * dof, 0.5);
     x = Math.sqrt(dof * (1 - x) / x);
     return (p > 0.5) ? x : -x;
   }
 
-public static function mean(dof) {
+public static function mean(dof:Float):Null<Float> {
     return (dof > 1) ? 0 : null;
   }
 
-public static function median(dof) {
+public static function median(dof:Float):Float {
     return 0;
   }
 
-public static function mode(dof) {
+public static function mode(dof:Float):Float {
     return 0;
   }
 
-public static function sample(dof) {
+public static function sample(dof:Float):Float {
     return Special.randn() * Math.sqrt(dof / (2 * Special.randg(dof / 2)));
   }
 
-public static function variance(dof) {
+public static function variance(dof:Float):Null<Float> {
     return (dof  > 2) ? dof / (dof - 2) : (dof > 1) ? Math.POSITIVE_INFINITY : null;
   }
 }
@@ -687,11 +687,14 @@ public static function cdf(x, n, p):Float {
 
 class Negbin{
 public static function pdf(k:Int, r:Float, p:Float):Null<Float> {
-    if (k != k >>> 0)
-	throw "error?";
-      return null;
+   
+	if (k != k >>> 0) {
+		throw "error?";
+		return null;
+	}
     if (k < 0)
       return 0;
+
     return Special.combination(k + r - 1, r - 1) *
         Math.pow(1 - p, k) * Math.pow(p, r);
   }
