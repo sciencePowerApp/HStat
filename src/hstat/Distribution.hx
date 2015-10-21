@@ -309,6 +309,7 @@ public static  function variance(shape:Float, scale:Float):Null<Float> {
 class Kumaraswamy{
 
 	public static function pdf(x:Float, alpha:Float, beta:Float):Float {
+	
 	if (x < 0 || x>1)
       return 0;
 

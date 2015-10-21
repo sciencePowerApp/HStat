@@ -7,6 +7,7 @@ import hstat.tests.distribution.Gamma_test;
 import hstat.tests.distribution.Hypergeometric_test;
 import hstat.tests.distribution.Inverse_gamma_test;
 import hstat.tests.distribution.Kumaraswamy_test;
+import hstat.tests.distribution.Lognormal_test;
 import hstat.tests.distribution.Normal_test;
 import hstat.tests.distribution.Binomial_test;
 import hstat.tests.special.Gammafn_test;
@@ -45,6 +46,7 @@ class Tests
 		runner.addCase(new Hypergeometric_test());
 		runner.addCase(new Inverse_gamma_test());
 		runner.addCase(new Kumaraswamy_test());
+		runner.addCase(new Lognormal_test());
 
 		Report.create(runner, NeverShowSuccessResults, AlwaysShowHeader);
 		
