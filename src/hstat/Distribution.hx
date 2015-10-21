@@ -36,29 +36,29 @@ class Beta{
 	return (x > 1 || x < 0) ? mod : Special.ibeta(x, alpha, beta);
   }
 
-  public static  function inv(x, alpha, beta) {
+  public static  function inv(x, alpha, beta):Float {
     return Special.ibetainv(x, alpha, beta);
   }
 
-  public static function mean(alpha, beta) {
+  public static function mean(alpha, beta):Float {
     return alpha / (alpha + beta);
   }
 
-  public static function median(alpha:Float, beta:Float) {
+  public static function median(alpha:Float, beta:Float):Float {
     return Special.ibetainv(0.5, alpha, beta);
   }
 
-  public static function mode(alpha:Float, beta:Float) {
+  public static function mode(alpha:Float, beta:Float):Float {
     return (alpha - 1 ) / ( alpha + beta - 2);
   }
 
   // return a random sample
-  public static function sample(alpha:Float, beta:Float) {
+  public static function sample(alpha:Float, beta:Float):Float {
     var u = Special.randg(alpha, null, null);
     return u / (u + Special.randg(beta, null,null));
   }
 
-  public static function variance(alpha, beta) {
+  public static function variance(alpha:Float, beta:Float):Float {
     return (alpha * beta) / (Math.pow(alpha + beta, 2) * (alpha + beta + 1));
   }
 
@@ -98,26 +98,26 @@ class CentralF{
     return Special.ibeta((df1 * x) / (df1 * x + df2), df1 / 2, df2 / 2);
   }
 
-  public static function inv(x, df1, df2) {
+  public static function inv(x:Float, df1:Float, df2:Float):Float {
     return df2 / (df1 * (1 / Special.ibetainv(x, df1 / 2, df2 / 2) - 1));
   }
 
-  public static function mean(df1, df2) {
+  public static function mean(df1:Float, df2:Float):Null<Float> {
     return (df2 > 2) ? df2 / (df2 - 2) : null;
   }
  
-  public static function mode(df1, df2) {
+  public static function mode(df1:Float, df2:Float):Null<Float> {
     return (df1 > 2) ? (df2 * (df1 - 2)) / (df1 * (df2 + 2)) : null;
   }
 
   // return a random sample
-  public static function sample(df1:Float, df2:Float) {
+  public static function sample(df1:Float, df2:Float):Float {
     var x1 = Special.randg(df1 / 2,null,null) * 2;
     var x2 = Special.randg(df2 / 2,null,null) * 2;
     return (x1 / df1) / (x2 / df2);
   }
 
-  public static  function variance(df1, df2):Null<Float> {
+  public static  function variance(df1:Float, df2:Float):Null<Float> {
     if (df2 <= 4)
       return null;
     return 2 * df2 * df2 * (df1 + df2 - 2) /
@@ -127,27 +127,27 @@ class CentralF{
 
 class Cauchy {
 
-  public static function pdf(x, local, scale) {
+  public static function pdf(x:Float, local:Float, scale:Float):Float {
     return (scale / (Math.pow(x - local, 2) + Math.pow(scale, 2))) / Math.PI;
   }
 
-  public static function cdf(x, local, scale) {
+  public static function cdf(x:Float, local:Float, scale:Float):Float {
     return Math.atan((x - local) / scale) / Math.PI + 0.5;
   }
 
-  public static function inv(p, local, scale) {
+  public static function inv(p:Float, local:Float, scale):Float {
     return local + scale * Math.tan(Math.PI * (p - 0.5));
   }
 
-  public static function median(local, scale) {
+  public static function median(local:Float, scale:Float):Float {
     return local;
   }
 
-  public static function mode(local, scale) {
+  public static function mode(local:Float, scale:Float):Float {
     return local;
   }
 
-  public static function sample(local, scale) {
+  public static function sample(local:Float, scale:Float):Float {
     return Special.randn(null, null) *
         Math.sqrt(1 / (2 * Special.randg(0.5))) * scale + local;
   }
@@ -173,58 +173,58 @@ public static function pdf(x:Float, dof):Float {
     return 2 * Special.gammapinv(p, 0.5 * dof);
   }
   
-  public static function mean(dof) {
+  public static function mean(dof:Float):Float {
     return dof;
   }
   
-  public static function median(dof) {
+  public static function median(dof:Float):Float {
     return dof * Math.pow(1 - (2 / (9 * dof)), 3);
   }
   
-  public static function mode(dof) {
+  public static function mode(dof:Float):Float {
     return (dof - 2 > 0) ? dof - 2 : 0;
   }
   
-  public static function sample(dof) {
+  public static function sample(dof:Float):Float {
     return Special.randg(dof / 2) * 2;
   }
   
-  public static function variance(dof) {
+  public static function variance(dof:Float):Float {
     return 2 * dof;
   }
 }
 
 
 class Exponential{
-	public static function pdf(x, rate) {
+	public static function pdf(x:Float, rate:Float):Float {
     return x < 0 ? 0 : rate * Math.exp(-rate * x);
   }
 
-  public static function cdf(x, rate) {
+  public static function cdf(x:Float, rate:Float):Float {
     return x < 0 ? 0 : 1 - Math.exp(-rate * x);
   }
 
-  public static function inv(p, rate) {
+  public static function inv(p:Float, rate:Float):Float {
     return -Math.log(1 - p) / rate;
   }
 
-  public static function mean(rate) {
+  public static function mean(rate:Float):Float {
     return 1 / rate;
   }
 
-  public static function neduab(rate) {
+  public static function neduab(rate:Float):Float {
     return (1 / rate) * Math.log(2);
   }
 
-  public static function mode(rate) {
+  public static function mode(rate:Float):Float {
     return 0;
   }
 
-  public static function sample(rate) {
+  public static function sample(rate:Float):Float {
     return -1 / rate * Math.log(Math.random());
   }
 
-  public static function variance(rate) {
+  public static function variance(rate:Float):Float {
     return Math.pow(rate, -2);
   }
 }
@@ -246,7 +246,7 @@ public static function cdf(x:Float, shape:Float, scale:Float):Float {
     return Special.lowRegGamma(shape, x / scale);
   }
 
-	public static function inv(p:Float, shape:Float, scale:Float) {
+	public static function inv(p:Float, shape:Float, scale:Float):Float {
     return Special.gammapinv(p, shape) * scale;
   }
 
@@ -263,7 +263,7 @@ public static function cdf(x:Float, shape:Float, scale:Float):Float {
     return Special.randg(shape) * scale;
   }
 
-  public static function variance(shape:Float, scale:Float) {
+  public static function variance(shape:Float, scale:Float):Float {
     return shape * scale * scale;
   }
 }
@@ -282,7 +282,7 @@ public static function cdf(x:Float, shape:Float, scale:Float):Float {
     return 1 - Special.lowRegGamma(shape, scale / x);
   }
 
-public static function inv(p:Float, shape:Float, scale:Float) {
+public static function inv(p:Float, shape:Float, scale:Float):Float {
     return scale / Special.gammapinv(1 - p, shape);
   }
 
@@ -290,11 +290,11 @@ public static  function mean(shape:Float, scale:Float):Null<Float> {
     return (shape > 1) ? scale / (shape - 1) : null;
   }
 
- public static  function mode(shape:Float, scale:Float) {
+ public static  function mode(shape:Float, scale:Float):Float {
     return scale / (shape + 1);
   }
 
-public static function sample(shape:Float, scale:Float) {
+public static function sample(shape:Float, scale:Float):Float {
     return scale / Special.randg(shape);
   }
 
@@ -335,7 +335,7 @@ class Kumaraswamy{
     return Math.pow(1 - Math.pow(1 - p, 1 / beta), 1 / alpha);
   }
 
-  public static function mean(alpha, beta) {
+  public static function mean(alpha, beta):Float {
     return (beta * Special.gammafn(1 + 1 / alpha) *
             Special.gammafn(beta)) / (Special.gammafn(1 + 1 / alpha + beta));
   }
@@ -360,7 +360,7 @@ class Kumaraswamy{
 class Lognormal{
 
 
-	public static function pdf(x, mu, sigma):Float {
+	public static function pdf(x:Float, mu:Float, sigma:Float):Float {
     if (x <= 0)
       return 0;
     return Math.exp(-Math.log(x) - 0.5 * Math.log(2 * Math.PI) -
@@ -368,34 +368,34 @@ class Lognormal{
                     (2 * sigma * sigma));
   }
 
-  public static function cdf(x, mu, sigma):Float {
+  public static function cdf(x:Float, mu:Float, sigma:Float):Float {
     if (x < 0)
       return 0;
     return 0.5 +
         (0.5 * Special.erf((Math.log(x) - mu) / Math.sqrt(2 * sigma * sigma)));
   }
 
-  public static function inv(p, mu, sigma):Float {
+  public static function inv(p:Float, mu:Float, sigma:Float):Float {
     return Math.exp(-1.41421356237309505 * sigma * Special.erfcinv(2 * p) + mu);
   }
 
-  public static function mean(mu, sigma):Float {
+  public static function mean(mu:Float, sigma:Float):Float {
     return Math.exp(mu + sigma * sigma / 2);
   }
 
-  public static function median(mu, sigma):Float {
+  public static function median(mu:Float, sigma:Float):Float {
     return Math.exp(mu);
   }
 
-  public static function mode(mu, sigma):Float {
+  public static function mode(mu:Float, sigma:Float):Float {
     return Math.exp(mu - sigma * sigma);
   }
 
-  public static function sample(mu, sigma):Float {
+  public static function sample(mu:Float, sigma:Float):Float {
     return Math.exp(Special.randn() * sigma + mu);
   }
 
-  public static function variance(mu, sigma):Float {
+  public static function variance(mu:Float, sigma:Float):Float {
     return (Math.exp(sigma * sigma) - 1) * Math.exp(2 * mu + sigma * sigma);
   }
 }
@@ -460,38 +460,38 @@ class Noncentralt{
 
 class Normal{
 
-public static function pdf(x:Float, mean:Float, std:Float) {
+public static function pdf(x:Float, mean:Float, std:Float):Float {
     return Math.exp(-0.5 * Math.log(2 * Math.PI) -
                     Math.log(std) - Math.pow(x - mean, 2) / (2 * std * std));
   }
 
-public static function cdf(x:Float, mean:Float, std:Float) {
+public static function cdf(x:Float, mean:Float, std:Float):Float {
     return 0.5 * (1 + Special.erf((x - mean) / Math.sqrt(2 * std * std)));
   }
   
-public static function inv(p:Float, mean:Float, std:Float) {
+public static function inv(p:Float, mean:Float, std:Float):Float {
     return -1.41421356237309505 * std * Special.erfcinv(2 * p) + mean;
   }
 
-  public static function mean(mean:Float, std:Float) {
+  public static function mean(mean:Float, std:Float):Float {
     return mean;
   }
 
-public static function median(mean:Float, std:Float) {
+public static function median(mean:Float, std:Float):Float {
 	throw "error?";
     return mean;
   }
 
-public static function mode(mean:Float, std:Float) {
+public static function mode(mean:Float, std:Float):Float {
 	throw "error?";
     return mean;
   }
 
-public static function sample(mean:Float, std:Float) {
+public static function sample(mean:Float, std:Float):Float {
     return Special.randn() * std + mean;
   }
 
-public static function variance(mean:Float, std:Float) {
+public static function variance(mean:Float, std:Float):Float {
     return std * std;
   }
 }
@@ -510,7 +510,7 @@ public static function cdf(x:Float, scale:Float, shape:Float):Float {
     return 1 - Math.pow(scale / x, shape);
   }
 
-public static function inv(p:Float, scale:Float, shape:Float) {
+public static function inv(p:Float, scale:Float, shape:Float):Float {
     return scale / Math.pow(1 - p, 1 / shape);
   }
 
@@ -524,7 +524,7 @@ public static function median(scale:Float, shape:Float):Float {
     return scale * (shape * Math.sqrt(2));
   }
 
-public static function mode(scale:Float, shape:Float) {
+public static function mode(scale:Float, shape:Float):Float {
     return scale;
   }
 
@@ -581,40 +581,40 @@ public static function variance(dof:Float):Null<Float> {
 
 class Weibull{
 
-public static function pdf(x, scale, shape):Float {
+public static function pdf(x:Float, scale:Float, shape:Float):Float {
     if (x < 0)
       return 0;
     return (shape / scale) * Math.pow((x / scale), (shape - 1)) *
         Math.exp(-(Math.pow((x / scale), shape)));
   }
 
-public static function cdf(x, scale, shape):Float {
+public static function cdf(x:Float, scale:Float, shape:Float):Float {
     return x < 0 ? 0 : 1 - Math.exp(-Math.pow((x / scale), shape));
   }
 
-public static function inv(p, scale, shape):Float {
+public static function inv(p:Float, scale:Float, shape:Float):Float {
     return scale * Math.pow(-Math.log(1 - p), 1 / shape);
   }
 
-public static function mean(scale, shape):Float {
+public static function mean(scale:Float, shape:Float):Float {
     return scale * Special.gammafn(1 + 1 / shape);
   }
 
-public static function median(scale, shape):Float {
+public static function median(scale:Float, shape:Float):Float {
     return scale * Math.pow(Math.log(2), 1 / shape);
   }
 
-public static function mode(scale, shape):Null<Float> {
+public static function mode(scale:Float, shape:Float):Null<Float> {
     if (shape <= 1)
       return null;
     return scale * Math.pow((shape - 1) / shape, 1 / shape);
   }
 
-public static function sample(scale, shape):Float {
+public static function sample(scale:Float, shape:Float):Float {
     return scale * Math.pow(-Math.log(Math.random()), 1 / shape);
   }
 
-public static function variance(scale, shape):Float {
+public static function variance(scale:Float, shape:Float):Float {
     return scale * scale * Special.gammafn(1 + 2 / shape) -
         Math.pow(mean(scale, shape), 2);
   }
@@ -622,11 +622,11 @@ public static function variance(scale, shape):Float {
 
 
 class Uniform{
-public static function pdf(x, a, b):Float {
+public static function pdf(x:Float, a, b):Float {
     return (x < a || x > b) ? 0 : 1 / (b - a);
   }
 
-public static function cdf(x, a, b):Float {
+public static function cdf(x:Float, a:Float, b:Float):Float {
     if (x < a)
       return 0;
     else if (x < b)
@@ -634,27 +634,27 @@ public static function cdf(x, a, b):Float {
     return 1;
   }
 
-public static function inv(p, a, b):Float {
+public static function inv(p:Float, a:Float, b:Float):Float {
     return a + (p * (b - a));
   }
 
-public static function mean(a, b):Float {
+public static function mean(a:Float, b:Float):Float {
     return 0.5 * (a + b);
   }
 
-public static function median(a, b):Float {
+public static function median(a:Float, b:Float):Float {
     return mean(a, b);
   }
 
-public static function mode(a, b):Float {
+public static function mode(a:Float, b:Float):Float {
     throw 'mode is not yet implemented';
   }
 
-public static function sample(a, b):Float {
+public static function sample(a:Float, b:Float):Float {
     return (a / 2 + b / 2) + (b / 2 - a / 2) * (2 * Math.random() - 1);
   }
 
-public static  function variance(a, b):Float {
+public static  function variance(a:Float, b:Float):Float {
     return Math.pow(b - a, 2) / 12;
   }
 }
@@ -668,7 +668,7 @@ public static function pdf(k:Float, n:Float, p:Float):Float {
       Special.combination(n, k) * Math.pow(p, k) * Math.pow(1 - p, n - k);
   }
 
-public static function cdf(x, n, p):Float {
+public static function cdf(x:Int, n:Float, p:Float):Float {
     var binomarr = [],
     k = 0;
     if (x < 0) {
@@ -818,7 +818,7 @@ public static function cdf(x:Int, N:Int, m:Int, n:Int):Float {
       return 1;
     } else if (m * 2 > N) {
       // More than half the population is successes.
-
+	  
       if(n * 2 > N) {
         // More than half the population is sampled.
 
@@ -895,11 +895,11 @@ public static function cdf(x:Int, N:Int, m:Int, n:Int):Float {
 
 
 class Poisson{
-public static function pdf(k, l) {
+public static function pdf(k:Float, l:Float):Float {
     return Math.pow(l, k) * Math.exp(-l) / Special.factorial(k);
   }
 
-public static function cdf(x, l):Float {
+public static function cdf(x:Int, l:Float):Float {
     var sumarr = [],
     k = 0;
     if (x < 0) return 0;
@@ -909,15 +909,15 @@ public static function cdf(x, l):Float {
     return HStat.sum(sumarr);
   }
 
-public static function mean(l) {
+public static function mean(l:Float):Float {
     return l;
   }
 
-public static function variance(l) {
+public static function variance(l:Float):Float {
     return l;
   }
 
-public static function sample(l) {
+public static function sample(l:Float):Float {
     var p:Float = 1, k = 0, L = Math.exp(-l);
     do {
       k++;
@@ -928,7 +928,7 @@ public static function sample(l) {
 }
 
 class Triangular{
-public static function pdf(x, a, b, c):Float {
+public static function pdf(x:Float, a:Float, b:Float, c:Float):Float {
     if (b <= a || c < a || c > b) {
       return Math.NaN;
     } else {
@@ -944,7 +944,7 @@ public static function pdf(x, a, b, c):Float {
     }
   }
   
- public static function cdf(x, a, b, c):Float {
+ public static function cdf(x:Float, a:Float, b:Float, c:Float):Float {
     if (b <= a || c < a || c > b)
       return Math.NaN;
     if (x <= a)
@@ -957,7 +957,7 @@ public static function pdf(x, a, b, c):Float {
       return 1 - Math.pow(b - x, 2) / ((b - a) * (b - c));
   }
   
-  public static function inv(p, a, b, c):Float {
+  public static function inv(p:Float, a:Float, b:Float, c:Float):Float {
     if (b <= a || c < a || c > b) {
       return Math.NaN;
     } else {
@@ -969,11 +969,11 @@ public static function pdf(x, a, b, c):Float {
     }
   }
   
-  public static function mean(a, b, c) {
+  public static function mean(a:Float, b:Float, c:Float):Float {
     return (a + b + c) / 3;
   }
   
-  public static function median(a, b, c) {
+  public static function median(a, b, c):Float {
     if (c <= (a + b) / 2) {
       return b - Math.sqrt((b - a) * (b - c)) / Math.sqrt(2);
     } else if (c > (a + b) / 2) {
@@ -983,18 +983,18 @@ public static function pdf(x, a, b, c):Float {
 	return 0;
   }
   
-  public static function mode(a, b, c) {
+  public static function mode(a:Float, b:Float, c:Float):Float {
     return c;
   }
   
-  public static function sample(a, b, c) {
+  public static function sample(a:Float, b:Float, c:Float):Float {
     var u = Math.random();
     if (u < ((c - a) / (b - a)))
       return a + Math.sqrt(u * (b - a) * (c - a));
     return b - Math.sqrt((1 - u) * (b - a) * (b - c));
   }
   
-  public static function variance(a, b, c) {
+  public static function variance(a:Float, b:Float, c:Float):Float {
     return (a * a + b * b + c * c - a * b - a * c - b * c) / 18;
   }
 	

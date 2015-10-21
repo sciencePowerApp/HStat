@@ -13,6 +13,8 @@ import hstat.tests.distribution.Noncentralt_test;
 import hstat.tests.distribution.Normal_test;
 import hstat.tests.distribution.Binomial_test;
 import hstat.tests.distribution.Pareto_test;
+import hstat.tests.distribution.Student_t_test;
+import hstat.tests.distribution.Triangular_test;
 import hstat.tests.special.Gammafn_test;
 import hstat.tests.special.Gammap_test;
 import hstat.tests.special.General_test;
@@ -53,6 +55,8 @@ class Tests
 		runner.addCase(new Neg_bin_test());
 		runner.addCase(new Noncentralt_test());
 		runner.addCase(new Pareto_test());
+		runner.addCase(new Student_t_test());
+		runner.addCase(new Triangular_test());
 
 		Report.create(runner, NeverShowSuccessResults, AlwaysShowHeader);
 		
