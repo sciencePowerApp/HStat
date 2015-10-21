@@ -308,17 +308,21 @@ public static  function variance(shape:Float, scale:Float):Null<Float> {
 
 class Kumaraswamy{
 
-	public static function pdf(x, alpha, beta):Float {
+	public static function pdf(x:Float, alpha:Float, beta:Float):Float {
+	if (x < 0 || x>1)
+      return 0;
+
     if (x == 0 && alpha == 1)
       return beta;
     else if (x == 1 && beta == 1)
       return alpha;
+	  
     return Math.exp(Math.log(alpha) + Math.log(beta) + (alpha - 1) *
                     Math.log(x) + (beta - 1) *
                     Math.log(1 - Math.pow(x, alpha)));
   }
 
-  public static function cdf(x, alpha, beta):Float {
+  public static function cdf(x:Float, alpha:Float, beta:Float):Float {
     if (x < 0)
       return 0;
     else if (x > 1)
@@ -326,7 +330,7 @@ class Kumaraswamy{
     return (1 - Math.pow(1 - Math.pow(x, alpha), beta));
   }
 
-  public static function inv(p, alpha, beta) {
+  public static function inv(p:Float, alpha:Float, beta:Float):Float {
     return Math.pow(1 - Math.pow(1 - p, 1 / beta), 1 / alpha);
   }
 
@@ -335,17 +339,17 @@ class Kumaraswamy{
             Special.gammafn(beta)) / (Special.gammafn(1 + 1 / alpha + beta));
   }
 
-  public static function median(alpha, beta) {
+  public static function median(alpha:Float, beta:Float):Float {
     return Math.pow(1 - Math.pow(2, -1 / beta), 1 / alpha);
   }
 
-  public static function mode(alpha, beta):Null<Float> {
+  public static function mode(alpha:Float, beta:Float):Null<Float> {
     if (!(alpha >= 1 && beta >= 1 && (alpha != 1 && beta != 1)))
       return null;
     return Math.pow((alpha - 1) / (alpha * beta - 1), 1 / alpha);
   }
 
-  public static function variance(alpha, beta) {
+  public static function variance(alpha:Float, beta:Float):Float {
     throw 'variance not yet implemented';
     // TODO: complete this
   }
