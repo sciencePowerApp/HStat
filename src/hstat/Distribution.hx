@@ -657,6 +657,7 @@ public static  function variance(a, b):Float {
 
 class Binomial{
 public static function pdf(k:Float, n:Float, p:Float):Float {
+
     return (p == 0 || p == 1) ?
       ((n * p) == k ? 1 : 0) :
       Special.combination(n, k) * Math.pow(p, k) * Math.pow(1 - p, n - k);
