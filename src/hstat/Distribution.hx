@@ -155,7 +155,7 @@ class Cauchy {
 
 
 class Chisquare {
-public static function pdf(x, dof):Float {
+public static function pdf(x:Float, dof):Float {
     if (x < 0)
       return 0;
     return (x == 0 && dof == 2) ? 0.5 :
@@ -169,7 +169,7 @@ public static function pdf(x, dof):Float {
     return Special.lowRegGamma(dof / 2, x / 2);
   }
   
-  public static function inverse(p:Float, dof:Float):Float {
+  public static function inv(p:Float, dof:Float):Float {
     return 2 * Special.gammapinv(p, 0.5 * dof);
   }
   

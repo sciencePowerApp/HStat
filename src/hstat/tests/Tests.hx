@@ -2,6 +2,7 @@ package hstat.tests;
 
 import hstat.tests.distribution.Beta_test;
 import hstat.tests.distribution.Central_f_test;
+import hstat.tests.distribution.Chisquare_test;
 import hstat.tests.distribution.Normal_test;
 import hstat.tests.distribution.Binomial_test;
 import hstat.tests.special.Gammafn_test;
@@ -35,6 +36,7 @@ class Tests
 		runner.addCase(new Normal_test());
 		runner.addCase(new Binomial_test());
 		runner.addCase(new Central_f_test());
+		runner.addCase(new Chisquare_test());
 
 		Report.create(runner, NeverShowSuccessResults, AlwaysShowHeader);
 		
