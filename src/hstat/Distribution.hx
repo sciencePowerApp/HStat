@@ -498,37 +498,37 @@ public static function variance(mean:Float, std:Float) {
 
 
 class Pareto{
-public static function pdf(x, scale, shape):Float {
+public static function pdf(x:Float, scale:Float, shape:Float):Float {
     if (x < scale)
       return 0;
     return (shape * Math.pow(scale, shape)) / Math.pow(x, shape + 1);
   }
 
-public static function cdf(x, scale, shape):Float {
+public static function cdf(x:Float, scale:Float, shape:Float):Float {
     if (x < scale)
       return 0;
     return 1 - Math.pow(scale / x, shape);
   }
 
-public static function inv(p, scale, shape) {
+public static function inv(p:Float, scale:Float, shape:Float) {
     return scale / Math.pow(1 - p, 1 / shape);
   }
 
-public static function mean(scale, shape):Null<Float> {
+public static function mean(scale:Float, shape:Float):Null<Float> {
     if (shape <= 1)
       return null;
     return (shape * Math.pow(scale, shape)) / (shape - 1);
   }
 
-public static function median(scale, shape):Float {
+public static function median(scale:Float, shape:Float):Float {
     return scale * (shape * Math.sqrt(2));
   }
 
-public static function mode(scale, shape) {
+public static function mode(scale:Float, shape:Float) {
     return scale;
   }
 
-public static function variance(scale, shape):Null<Float> {
+public static function variance(scale:Float, shape:Float):Null<Float> {
     if (shape <= 2)
       return null;
     return (scale*scale * shape) / (Math.pow(shape - 1, 2) * (shape - 2));
