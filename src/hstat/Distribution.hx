@@ -678,7 +678,7 @@ public static function cdf(x:Int, n:Float, p:Float):Float {
       for (k in 0... x+1) {
         binomarr[ k ] = Binomial.pdf(k, n, p);
       }
-      return HStat.sum(binomarr);
+      return Vector.sum(binomarr);
     }
     return 1;
   }
@@ -906,7 +906,7 @@ public static function cdf(x:Int, l:Float):Float {
     for (k in 0... x+1) {
       sumarr.push(Poisson.pdf(k, l));
     }
-    return HStat.sum(sumarr);
+    return Vector.sum(sumarr);
   }
 
 public static function mean(l:Float):Float {

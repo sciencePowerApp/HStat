@@ -20,6 +20,7 @@ import hstat.tests.special.Gammafn_test;
 import hstat.tests.special.Gammap_test;
 import hstat.tests.special.General_test;
 import hstat.tests.special.LowRegGamma_test;
+import hstat.tests.test.Ztest_test;
 import openfl.system.System;
 import utest.Runner;
 import utest.ui.Report;
@@ -60,6 +61,10 @@ class Tests
 		runner.addCase(new Triangular_test());
 		runner.addCase(new Uniform_test());
 
+		//Tests
+		runner.addCase(new Ztest_test());
+		
+		
 		Report.create(runner, NeverShowSuccessResults, AlwaysShowHeader);
 		
 		runner.onComplete.add(function(h) { 
