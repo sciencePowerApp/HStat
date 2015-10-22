@@ -25,7 +25,7 @@ class Test
 
   
   
-  public static function ztest_value_array_sides_flag(val:Float, arr:Array<Float>, sides:Int, flag:Bool=false):Float {
+  public static function ztest_zscore_array_sides_flag(val:Float, arr:Array<Float>, sides:Int, flag:Bool=false):Float {
 	  
 	  var z = zscore_val_arr_flag(val, arr, flag);
         return (sides == 1) ?
@@ -34,7 +34,7 @@ class Test
   }
   
   
-  public static function ztest_val_mean_sd_sides(value:Float, mean:Float, sd:Float, sides:Int):Float {
+  public static function ztest_zscore_mean_sd_sides(value:Float, mean:Float, sd:Float, sides:Int):Float {
 	  var z = zscore_val_mean_sd(value,mean,sd);
       return (sides == 1) ?
         (Normal.cdf(-Math.abs(z), 0, 1)) :

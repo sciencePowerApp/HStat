@@ -20,6 +20,7 @@ import hstat.tests.special.Gammafn_test;
 import hstat.tests.special.Gammap_test;
 import hstat.tests.special.General_test;
 import hstat.tests.special.LowRegGamma_test;
+import hstat.tests.test.DifferenceOfProportions_test;
 import hstat.tests.test.Ztest_test;
 import openfl.system.System;
 import utest.Runner;
@@ -63,6 +64,7 @@ class Tests
 
 		//Tests
 		runner.addCase(new Ztest_test());
+		runner.addCase(new DifferenceOfProportions_test());
 		
 		
 		Report.create(runner, NeverShowSuccessResults, AlwaysShowHeader);

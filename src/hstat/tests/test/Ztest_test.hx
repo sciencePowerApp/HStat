@@ -13,18 +13,18 @@ class Ztest_test
 	}
 	
 	
-	public static function test_ztest() {
-      var p = Test.ztest_val_mean_sd_sides(1.96, 0, 1, 2);
-      Assert.isTrue(p < 0.05);
+	public function test_ztest() {
+      var p = Test.ztest_zscore_mean_sd_sides(1.96, 0, 1, 2);
+      Assert.equals(p , 0.049995790296440856);
     }
 	
-	public static function test_zscore() {
+	public function test_zscore() {
       var p = Test.ztest_zscores_sides(1.96, 2);
-      Assert.isTrue(p < 0.05);
+      Assert.equals(p , 0.049995790296440856);
     }
-    public static function test_ztest2() {
-      var p = Test.ztest_value_array_sides_flag(1.96, [1, -1], 2);
-      Assert.isTrue(p < 0.05);
+    public function test_ztest2() {
+      var p = Test.ztest_zscore_array_sides_flag(1.96, [1, -1], 2);
+      Assert.equals(p , 0.049995790296440856);
     }
 	
 	
