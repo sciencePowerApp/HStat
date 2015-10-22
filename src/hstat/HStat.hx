@@ -203,7 +203,7 @@ public static function cumreduce(arr:Array<Array<Float>>, func:Float -> Float ->
     if (ncol > 0)
       res[row][0] = arr[row][0];
     for (col in 1... ncol)
-      res[row][col] = func(res[row][col-1], arr[row][col], null);
+      res[row][col] = func(res[row][col-1], arr[row][col], Math.NEGATIVE_INFINITY);
   }
   return res;
 }
@@ -220,7 +220,7 @@ public static function alter(arr:Array<Array<Float>>, func:Float -> Float->Float
 }
 
 
-public static function retZero(i:Float,j:Float, k:Float):Float { return 0; }
+
 
 
 // Generate a rows x cols matrix of zeros.
@@ -230,8 +230,8 @@ public static function zeros(rows:Int, cols:Int):Array<Array<Float>> {
   return create(rows, cols, retZero);
 }
 
-
-public static function retOne(i:Float, j:Float, k:Float ):Float { return 1; }
+public static function retZero(i:Float,j:Float):Float { return 0; }
+public static function retOne(i:Float, j:Float):Float { return 1; }
 
 
 // Generate a rows x cols matrix of ones.
@@ -285,27 +285,31 @@ public static function symmetric(arr:Array<Array<Float>>):Bool {
   return true;
 }
 
+public static function retZero3 (a:Float, b:Float, c:Float):Float {
+	return 0;
+}
+
 
 // Set all values to zero.
 public static function clear_arr(arr:Array<Float>):Array<Float> {
-  return alter_arr(arr, retZero);
+
+  return alter_arr(arr, retZero3);
 }
 
 // Set all values to zero.
 public static function clear(arr:Array<Array<Float>>):Array<Array<Float>> {
-  return alter(arr, retZero);
+  return alter(arr, retZero3);
 }
 
 
 // Generate sequence.
-public static function seq(min, max, length, func) {
-    func = false;
+public static function seq(min:Float, max:Float, length:Int, func:Float -> Float -> Float = null) {
 
   var arr = [];
   var hival = calcRdx(min, max);
   var step = (max * hival - min * hival) / ((length - 1) * hival);
-  var current = min;
-  var cnt = 0;
+  var current:Float = min;
+  var cnt:Int = 0;
 
   // Current is assigned using a technique to compensate for IEEE error.
   // TODO: Needs better implementation.
@@ -313,7 +317,7 @@ public static function seq(min, max, length, func) {
         {
 			cnt++;
 			current = (min * hival + step * hival * cnt) / hival;
-			arr.push((func ? func(current, cnt) : current));
+			arr.push((func !=null ? func(current, cnt) : current));
 		}
     
   }
