@@ -42,11 +42,11 @@ public static function isArray(arg:Dynamic):Bool {
 	}	
 	
 
-public static function map_arr(_arr:Array<Float>, func:Float->Float->Float->Float, toAlter:Bool):Array<Float> {
+public static function map_arr(_arr:Array<Float>, func:Float->Float->Float->Float, ?toAlter:Bool = false):Array<Float> {
 		return map([_arr], func, toAlter)[0];
 	}
 	
-public static function map(_arr:Array<Array<Float>>, func:Float->Float->Float->Float , toAlter:Bool):Array<Array<Float>> {
+public static function map(_arr:Array<Array<Float>>, func:Float->Float->Float->Float , ?toAlter:Bool = false):Array<Array<Float>> {
 	  var row, nrow:Int, ncol:Int, res, col;
 	  var arr = _arr;
 

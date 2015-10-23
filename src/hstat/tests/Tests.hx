@@ -16,6 +16,7 @@ import hstat.tests.distribution.Pareto_test;
 import hstat.tests.distribution.Student_t_test;
 import hstat.tests.distribution.Triangular_test;
 import hstat.tests.distribution.Uniform_test;
+import hstat.tests.linearalgebra.Dummy_linear_test;
 import hstat.tests.special.Gammafn_test;
 import hstat.tests.special.Gammap_test;
 import hstat.tests.special.General_test;
@@ -69,11 +70,7 @@ class Tests
 	{
 		var runner = new Runner();
 		
-		//Special
-		runner.addCase(new Gammafn_test());
-		runner.addCase(new Gammap_test());
-		runner.addCase(new LowRegGamma_test());
-		runner.addCase(new General_test());
+
 		
 		//Distributions
 		runner.addCase(new Beta_test());
@@ -92,6 +89,16 @@ class Tests
 		runner.addCase(new Student_t_test());
 		runner.addCase(new Triangular_test());
 		runner.addCase(new Uniform_test());
+		
+		//Linear algebra
+		runner.addCase(new Dummy_linear_test());
+		
+		
+		//Special
+		runner.addCase(new Gammafn_test());
+		runner.addCase(new Gammap_test());
+		runner.addCase(new LowRegGamma_test());
+		runner.addCase(new General_test());
 
 		//Tests
 		runner.addCase(new Ztest_test());
@@ -121,8 +128,6 @@ class Tests
 		runner.addCase(new Product_test());
 		runner.addCase(new Quantiles_test());
 		runner.addCase(new Quartiles_test());
-		
-		
 		runner.addCase(new Range_test());
 		runner.addCase(new Skewness_test());
 		runner.addCase(new Sort_test());
@@ -133,6 +138,7 @@ class Tests
 		runner.addCase(new Sumsqrd_test());
 		runner.addCase(new Variance_test());
 
+		
 		
 		
 		
