@@ -3,10 +3,13 @@ import hstat.Vector;
 import utest.Assert;
 
 class Product_test{
+	public function new() { };
+
     public function test_return_basic_product() {
       Assert.equals(Vector.product([1, 2, 3]), 6);
+	}
 
-    public function test_product_from_instance() {
+   /* public function test_product_from_instance() {
       Assert.equals(jStat([1, 2, 3]).product(), 6);
 
     public function test_product_matrix_cols() {
@@ -35,6 +38,6 @@ class Product_test{
 
     public function test_product_full_matrix_callback(val, stat) {
       Assert.equals(val, 24);
-    }
+    }*/
   
 }

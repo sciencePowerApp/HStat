@@ -100,19 +100,19 @@ class Vector
 
 
 	// mean squared error (MSE)
-	public static function meansqerr(arr:Array<Float>) {
+	public static function meansqerr(arr:Array<Float>):Float {
 	  return sumsqerr(arr) / arr.length;
 	}
 
 
 	// geometric mean of an array
-	public static function geomean(arr:Array<Float>) {
+	public static function geomean(arr:Array<Float>):Float {
 	  return Math.pow(product(arr), 1 / arr.length);
 	}
 
 
 	public static function sortAsc(arr:Array<Float>):Array<Float> {
-		arr.slice(0).sort(function(a:Float, b:Float):Int {
+		arr.sort(function(a:Float, b:Float):Int {
 					if (a == b) return 0; 
 					else if (a > b) return 1;
 					return -1;
@@ -123,7 +123,7 @@ class Vector
 	
 	// median of an array
 	//https://stackoverflow.com/questions/25305640/find-median-values-from-array-in-javascript-8-values-or-9-values
-	public static function median(arr:Array<Float>) {
+	public static function median(arr:Array<Float>):Float {
 	  var arrlen = arr.length;
 	  var m:Array<Float>  = sortAsc(arr);
 
@@ -138,13 +138,13 @@ class Vector
 
 
 	// cumulative sum of an array
-	public static function cumsum(arr:Array<Float>) {
-		HStat.cumreduce_arr(arr, function (a, b, c) { return a + b; },false);
+	public static function cumsum(arr:Array<Float>):Array<Float> {
+		return HStat.cumreduce_arr(arr, function (a, b, c) { return a + b; },false);
 	}
 
 
 	// cumulative product of an array
-	public static function cumprod(arr) {
+	public static function cumprod(arr:Array<Float>):Array<Float> {
 	return HStat.cumreduce_arr(arr, function(a, b, c) { return a * b; },false);
 	}
 
@@ -217,10 +217,11 @@ class Vector
 	// mean deviation (mean absolute deviation) of an array
 	public static function meandev(arr:Array<Float>):Float {
 	  var devSum:Float = 0;
-	  var mean:Float = mean(arr);
-	  var i;
-	  for (i in arr.length...0)
-		devSum += Math.abs(arr[i] - mean);
+	  var _mean:Float = mean(arr);
+	  var i = arr.length;
+	  while (--i >=0){
+		devSum += Math.abs(arr[i] - _mean);
+	  }
 	  return devSum / arr.length;
 	}
 
@@ -229,9 +230,10 @@ class Vector
 	public static function meddev(arr:Array<Float>):Float {
 	  var devSum:Float = 0;
 	  var median:Float = median(arr);
-	  var i;
-	  for (i in arr.length...0)
+	  var i = arr.length;
+	  while(--i>=0){
 		devSum += Math.abs(arr[i] - median);
+	  }
 	  return devSum / arr.length;
 	}
 
@@ -252,12 +254,20 @@ class Vector
 		_arr[ Math.round((arrlen) * 3 / 4) - 1 ]
 	  ];
 	}
+	
+	public static function copyArr(a:Array<Float>):Array<Float> {
+		var copy:Array<Float> = new Array<Float>();
+		for (val in a) {
+			copy[copy.length] = val;
+		}
+		return copy;
+	}
 
 
 	// Arbitary quantiles of an array. Direct port of the scipy.stats
 	// implementation by Pierre GF Gerard-Marchant.
 	public static function quantiles(arr:Array<Float>, quantilesArray:Array<Float>, ?alphap:Float , ?betap:Float) {
-	  var sortedArray:Array<Float> = sortAsc(arr);
+	  var sortedArray:Array<Float> = sortAsc(	arr	);
 	  var quantileVals:Array<Float> = new Array<Float>();
 	  var n = arr.length;
 	  var i, p, m, aleph, k, gamma;
@@ -298,14 +308,11 @@ class Vector
 	// The percentile rank of score in a given array. Returns the percentage
 	// of all values in the input array that are less than (kind='strict') or
 	// less or equal than (kind='weak') score. Default is weak.
-	public static function percentileOfScore(arr:Array<Float>, score, kind) {
+	public static function percentileOfScore(arr:Array<Float>, score:Float, strict:Bool = false) {
 	  var counter = 0;
 	  var len = arr.length;
-	  var strict = false;
 	  var value, i;
 
-	  if (kind == 'strict')
-		strict = true;
 
 	  for (i in 0...len) {
 		value = arr[i];
@@ -320,7 +327,7 @@ class Vector
 
 
 	// Histogram (bin count) data
-	public static function histogram(arr:Array<Float>, binCount:Int = 4) {
+	public static function histogram(arr:Array<Float>, binCount:Int = 4):Array<Int> {
 	  var first = min(arr);
 	  var binWidth:Float = (max(arr) - first) / binCount;
 	  var len = arr.length;

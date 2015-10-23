@@ -3,10 +3,13 @@ import hstat.Vector;
 import utest.Assert;
 
 class Mean_test{
+	public function new() { };
+
     public function test_return_basic_mean() {
       Assert.equals(Vector.mean([1, 2, 3]), 2);
+	}
 
-    public function test_mean_from_instance() {
+   /* public function test_mean_from_instance() {
       Assert.equals(jStat([1, 2, 3]).mean(), 2);
 
     public function test_mean_matrix_cols() {
@@ -35,6 +38,6 @@ class Mean_test{
 
     public function test_mean_full_matrix_callback(val, stat) {
       Assert.equals(val, 2.5);
-    }
+    }*/
   
 }

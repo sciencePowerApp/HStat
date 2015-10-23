@@ -3,10 +3,13 @@ import hstat.Vector;
 import utest.Assert;
 
 class Median_test{
+	public function new() { };
+
     public function test_return_basic_median() {
       Assert.equals(Vector.median([1, 2, 3]), 2);
+	}
 
-    public function test_median_from_instance() {
+    /*public function test_median_from_instance() {
       Assert.equals(jStat([1, 2, 3]).median(), 2);
 
     public function test_median_matrix_cols() {
@@ -35,6 +38,6 @@ class Median_test{
 
     public function test_median_full_matrix_callback(val, stat) {
       Assert.equals(val, 2.5);
-    }
+    }*/
   
 }

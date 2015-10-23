@@ -3,10 +3,13 @@ import hstat.Vector;
 import utest.Assert;
 
 class Geomean_test{
-    public function test_return_basic_geomean() {
-      Assert.equals(Vector.geomean([1, 2, 3]), 1.8171205928321397);
+	public function new() { };
 
-    public function test_geomean_from_instance() {
+    public function test_return_basic_geomean() {
+      Assert.floatEquals(Vector.geomean([1, 2, 3]), 1.8171205928321397);
+	}
+	  
+   /* public function test_geomean_from_instance() {
       Assert.equals(jStat([1, 2, 3]).geomean(), 1.8171205928321397);
 
     public function test_geomean_matrix_cols() {
@@ -36,6 +39,6 @@ class Geomean_test{
 
     public function test_geomean_full_matrix_callback(val, stat) {
       Assert.equals(val, 2.2133638394006434);
-    }
+    }*/
   
 }

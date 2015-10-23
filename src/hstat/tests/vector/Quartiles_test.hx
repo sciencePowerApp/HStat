@@ -3,10 +3,13 @@ import hstat.Vector;
 import utest.Assert;
 
 class Quartiles_test{
-    public function test_return_basic_quartiles() {
-      Assert.equals(Vector.quartiles([1, 2, 3, 4, 5, 6]), [2, 3, 5]);
+	public function new() { };
 
-    public function test_quartiles_from_instance() {
+    public function test_return_basic_quartiles() {
+      Assert.equals(Vector.quartiles([1, 2, 3, 4, 5, 6]).toString(), [2, 3, 5].toString());
+	}
+
+    /*public function test_quartiles_from_instance() {
       Assert.equals(jStat([1, 2, 3, 4, 5, 6]).quartiles(), [2, 3, 5]);
 
     public function test_quartiles_matrix_cols() {
@@ -27,5 +30,5 @@ class Quartiles_test{
     public function test_quartiles_matrix_cols_callback(val, stat) {
       Assert.equals(val, [[1, 3, 3], [2, 4, 4]]);
     }
-  
+  */
 }

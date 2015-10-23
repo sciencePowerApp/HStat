@@ -198,13 +198,14 @@ public static function cumreduce(arr:Array<Array<Float>>, func:Float -> Float ->
 
   for (row in 0... nrow) {
     // if the row doesn't exist, create it
-    if (!res[row])
-      res[row] = new Array<Float>();
-    if (ncol > 0)
-      res[row][0] = arr[row][0];
-    for (col in 1... ncol)
+    if (!res[row])	res[row] = new Array<Float>();
+    
+	if (ncol > 0)	res[row][0] = arr[row][0];
+    
+	for (col in 1... ncol)
       res[row][col] = func(res[row][col-1], arr[row][col], Math.NEGATIVE_INFINITY);
   }
+
   return res;
 }
 

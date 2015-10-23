@@ -3,10 +3,13 @@ import hstat.Vector;
 import utest.Assert;
 
 class Sumsqrd_test{
+	public function new() { };
+
     public function test_return_basic_sumsqrd() {
       Assert.equals(Vector.sumsqrd([1, 2, 3]), 14);
+	}
 
-    public function test_sumsqrd_from_instance() {
+    /*public function test_sumsqrd_from_instance() {
       Assert.equals(jStat([1, 2, 3]).sumsqrd(), 14);
 
     public function test_sumsqrd_matrix_cols() {
@@ -36,5 +39,5 @@ class Sumsqrd_test{
     public function test_sumsqrd_full_matrix_callback(val, stat) {
       Assert.equals(val, 650);
     }
-  
+  */
 }

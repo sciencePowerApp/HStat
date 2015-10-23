@@ -3,10 +3,13 @@ import hstat.Vector;
 import utest.Assert;
 
 class Mode_test{
+	public function new() { };
+
     public function test_return_basic_mode() {
       Assert.equals(Vector.mode([1, 2, 3, 3]), 3);
+	}
 
-    public function test_mode_from_instance() {
+/*    public function test_mode_from_instance() {
       Assert.equals(jStat([1, 2, 3, 3]).mode(), 3);
 
     public function test_mode_matrix_cols() {
@@ -27,6 +30,6 @@ class Mode_test{
       Assert.equals(val, [1, [2, 4]]);
 
 
-    public function test_topic() {
+    public function test_topic() {*/
       
 }

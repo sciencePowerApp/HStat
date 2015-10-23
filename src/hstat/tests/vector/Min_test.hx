@@ -3,10 +3,13 @@ import hstat.Vector;
 import utest.Assert;
 
 class Min_test{
+	public function new() { };
+
     public function test_return_basic_min() {
       Assert.equals(Vector.min([1, 2, 3]), 1);
+	}
 
-    public function test_min_from_instance() {
+  /*  public function test_min_from_instance() {
       Assert.equals(jStat([1, 2, 3]).min(), 1);
 
     public function test_min_matrix_cols() {
@@ -35,6 +38,6 @@ class Min_test{
 
     public function test_min_full_matrix_callback(val, stat) {
       Assert.equals(val, 1);
-    }
+    }*/
   
 }

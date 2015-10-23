@@ -22,6 +22,37 @@ import hstat.tests.special.General_test;
 import hstat.tests.special.LowRegGamma_test;
 import hstat.tests.test.DifferenceOfProportions_test;
 import hstat.tests.test.Ztest_test;
+import hstat.tests.vector.Coeffvar_test;
+import hstat.tests.vector.Corrcoeff_test;
+import hstat.tests.vector.Covariance_test;
+import hstat.tests.vector.Cumprod_test;
+import hstat.tests.vector.Cumsum_test;
+import hstat.tests.vector.Diff_test;
+import hstat.tests.vector.Geomean_test;
+import hstat.tests.vector.Histogram_test;
+import hstat.tests.vector.Kurtosis_test;
+import hstat.tests.vector.Max_test;
+import hstat.tests.vector.Mean_test;
+import hstat.tests.vector.Meandev_test;
+import hstat.tests.vector.Meansqerr_test;
+import hstat.tests.vector.Meddev_test;
+import hstat.tests.vector.Median_test;
+import hstat.tests.vector.Min_test;
+import hstat.tests.vector.Mode_test;
+import hstat.tests.vector.Percentile_of_score_test;
+import hstat.tests.vector.Percentile_test;
+import hstat.tests.vector.Product_test;
+import hstat.tests.vector.Quantiles_test;
+import hstat.tests.vector.Quartiles_test;
+import hstat.tests.vector.Range_test;
+import hstat.tests.vector.Skewness_test;
+import hstat.tests.vector.Sort_test;
+import hstat.tests.vector.Stdev_test;
+import hstat.tests.vector.Sum_test;
+import hstat.tests.vector.Sumrow_test;
+import hstat.tests.vector.Sumsqerr_test;
+import hstat.tests.vector.Sumsqrd_test;
+import hstat.tests.vector.Variance_test;
 import openfl.system.System;
 import utest.Runner;
 import utest.ui.Report;
@@ -65,6 +96,44 @@ class Tests
 		//Tests
 		runner.addCase(new Ztest_test());
 		runner.addCase(new DifferenceOfProportions_test());
+		
+		
+		//Vector
+		runner.addCase(new Coeffvar_test());
+		runner.addCase(new Corrcoeff_test());
+		runner.addCase(new Covariance_test());
+		runner.addCase(new Cumprod_test());
+		runner.addCase(new Cumsum_test());
+		runner.addCase(new Diff_test());
+		runner.addCase(new Geomean_test());
+		runner.addCase(new Histogram_test());
+		runner.addCase(new Kurtosis_test());
+		runner.addCase(new Max_test());
+		runner.addCase(new Mean_test());
+		runner.addCase(new Meandev_test());
+		runner.addCase(new Meansqerr_test());
+		runner.addCase(new Meddev_test());
+		runner.addCase(new Median_test());
+		runner.addCase(new Min_test());
+		runner.addCase(new Mode_test());
+		runner.addCase(new Percentile_of_score_test());
+		runner.addCase(new Percentile_test());
+		runner.addCase(new Product_test());
+		runner.addCase(new Quantiles_test());
+		runner.addCase(new Quartiles_test());
+		
+		
+		runner.addCase(new Range_test());
+		runner.addCase(new Skewness_test());
+		runner.addCase(new Sort_test());
+		runner.addCase(new Stdev_test());
+		runner.addCase(new Sum_test());
+		runner.addCase(new Sumrow_test());
+		runner.addCase(new Sumsqerr_test());
+		runner.addCase(new Sumsqrd_test());
+		runner.addCase(new Variance_test());
+
+		
 		
 		
 		Report.create(runner, NeverShowSuccessResults, AlwaysShowHeader);
