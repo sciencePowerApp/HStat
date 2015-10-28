@@ -1,21 +1,16 @@
 package hstat;
 
+import hstat.Dimensions;
 import thx.Types;
 
- 
 class HStat
 {
 
 public function new() {}
 	
-public static function  create_1(rows:Int, func:Float->Float->Float):Array<Dynamic> {
-
-	  return create(rows, rows, func);
 	
-}
-	
-	
-public static function  create(rows:Int, cols:Int, func:Float->Float->Float):Array<Array<Float>> {
+public static function  create(rows:Int, cols: Null <Int> = null, func:Float->Float->Float):Array<Array<Float>> {
+  if (cols == null) cols = rows;
   var res = new Array<Array<Float>>();
   var i, j;
 
@@ -29,25 +24,21 @@ public static function  create(rows:Int, cols:Int, func:Float->Float->Float):Arr
 }
 	
 	
-public static function isNumber(num:Dynamic):Bool {
-		throw "";
-		return Std.is(num, Float);	
-	}
-	
-	
-public static function isArray(arg:Dynamic):Bool {
-		throw "";
-		//should really have NumberArray check
-		return Types.toString(arg) == "Array";
-	}	
+
 	
 
 public static function map_arr(_arr:Array<Float>, func:Float->Float->Float->Float, ?toAlter:Bool = false):Array<Float> {
 		return map([_arr], func, toAlter)[0];
 	}
 	
-public static function map(_arr:Array<Array<Float>>, func:Float->Float->Float->Float , ?toAlter:Bool = false):Array<Array<Float>> {
-	  var row, nrow:Int, ncol:Int, res, col;
+public static function map<T>(_arr:Array<T>, func:Float->Float->Float->Float , ?toAlter:Bool = false):Array<T> {
+	
+	  if (Dimensions.getDimensions(_arr) == Dimension_type.List ) return _map ([_arr], func, toAlter)[0];
+	  return _map(_arr, func, toAlter);
+	}
+	
+private static function _map<T>(_arr:Array<T>, func:Float->Float->Float->Float , ?toAlter:Bool = false):Array<T> {
+	var row, nrow:Int, ncol:Int, res, col;
 	  var arr = _arr;
 
 	  nrow = arr.length;
@@ -63,7 +54,11 @@ public static function map(_arr:Array<Array<Float>>, func:Float->Float->Float->F
 	  }
 
 	  return res;
-	}
+}
+
+	
+	
+
 	
 
 
@@ -244,9 +239,8 @@ public static function ones(rows, cols):Array<Array<Float>> {
 
 
 // Generate a rows x cols matrix of uniformly random numbers.
-public static function rand(rows:Int, cols:Int):Array<Array<Float>> {
-  if (!isNumber(cols))
-    cols = rows;
+public static function rand(rows:Int, ?cols:Null<Int> = null):Array<Array<Float>> {
+  if (cols == null) cols = rows;
   return create(rows, cols, _rand);
 }
 
