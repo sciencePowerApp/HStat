@@ -1,5 +1,6 @@
 package hstat.tests;
 
+import hstat.tests.dataStructures.Dimensions_test;
 import hstat.tests.distribution.Beta_test;
 import hstat.tests.distribution.Central_f_test;
 import hstat.tests.distribution.Chisquare_test;
@@ -138,7 +139,8 @@ class Tests
 		runner.addCase(new Sumsqrd_test());
 		runner.addCase(new Variance_test());
 
-		
+		//data structures
+		runner.addCase(new Dimensions_test());
 		
 		
 		

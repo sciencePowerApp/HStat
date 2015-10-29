@@ -31,7 +31,7 @@ class Quantiles_test{
         var i;
 
         for (i in 0... quantiles.length) {
-          Assert.floatEquals( results[i], expected[i]);
+          Assert.floatEquals( results.get(i,0), expected[i]);
         }
 	}
 

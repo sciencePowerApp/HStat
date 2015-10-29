@@ -90,7 +90,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "1198",
+			build: "1394",
 			company: "",
 			file: "HStat",
 			fps: 60,
