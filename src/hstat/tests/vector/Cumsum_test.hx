@@ -6,7 +6,7 @@ class Cumsum_test{
 	public function new() { };
 
     public function test_return_basic_cumsum() {
-      Assert.equals(Vector.cumsum([1, 2, 3]).toString(), [1, 3, 6].toString());
+      Assert.equals(Vector.cumsum([[1, 2, 3]])[0].toString(), [1, 3, 6].toString());
 	}
 
 /*    public function test_cumsum_from_instance() {

@@ -6,7 +6,7 @@ class Quartiles_test{
 	public function new() { };
 
     public function test_return_basic_quartiles() {
-      Assert.equals(Vector.quartiles([1, 2, 3, 4, 5, 6]).toString(), [2, 3, 5].toString());
+      Assert.equals(Vector.quartiles([[1, 2, 3, 4, 5, 6]])[0].toString(), [2, 3, 5].toString());
 	}
 
     /*public function test_quartiles_from_instance() {

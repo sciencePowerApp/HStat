@@ -6,7 +6,7 @@ class Product_test{
 	public function new() { };
 
     public function test_return_basic_product() {
-      Assert.equals(Vector.product([1, 2, 3]), 6);
+      Assert.equals(Vector.product([[1, 2, 3]]), 6);
 	}
 
    /* public function test_product_from_instance() {

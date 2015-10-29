@@ -6,7 +6,7 @@ class Max_test{
 	public function new() { };
 
     public function test_return_basic_max() {
-      Assert.equals(Vector.max([1, 2, 3]), 3);
+      Assert.equals(Vector.max([[1, 2, 3]]), 3);
 	}
 
   /*  public function test_max_from_instance() {

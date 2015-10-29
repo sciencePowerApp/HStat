@@ -6,7 +6,7 @@ class Coeffvar_test{
 	public function new() { };
 
     public function test_return_basic_coeffvar() {
-      Assert.equals(Vector.coeffvar([1, 2, 3, 4]), 0.447213595499958);
+      Assert.equals(Vector.coeffvar([[1, 2, 3, 4]]), 0.447213595499958);
 	}
 /*
     public function test_coeffvar_from_instance() {

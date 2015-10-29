@@ -6,7 +6,7 @@ class Geomean_test{
 	public function new() { };
 
     public function test_return_basic_geomean() {
-      Assert.floatEquals(Vector.geomean([1, 2, 3]), 1.8171205928321397);
+      Assert.floatEquals(Vector.geomean([[1, 2, 3]]), 1.8171205928321397);
 	}
 	  
    /* public function test_geomean_from_instance() {

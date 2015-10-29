@@ -6,7 +6,7 @@ class Mean_test{
 	public function new() { };
 
     public function test_return_basic_mean() {
-      Assert.equals(Vector.mean([1, 2, 3]), 2);
+      Assert.equals(Vector.mean([[1, 2, 3]]), 2);
 	}
 
    /* public function test_mean_from_instance() {

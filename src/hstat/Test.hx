@@ -2,6 +2,7 @@ package hstat;
 import hstat.Distribution.CentralF;
 import hstat.Distribution.Normal;
 import hstat.Distribution.Studentt;
+import hstat.HStat.Matrix;
 
 
 /**
@@ -18,14 +19,14 @@ class Test
 		return (val - mean) / sd;
     }
   
-	public static function zscore_val_arr_flag(val:Float, array:Array<Float>, flag:Bool):Float {
+	public static function zscore_val_arr_flag(val:Float, array:Matrix, flag:Bool):Float {
     return (val - Vector.mean(array) / Vector.stdev(array, flag));
   }
 
 
   
   
-  public static function ztest_zscore_array_sides_flag(val:Float, arr:Array<Float>, sides:Int, flag:Bool=false):Float {
+  public static function ztest_zscore_array_sides_flag(val:Float, arr:Matrix, sides:Int, flag:Bool=false):Float {
 	  
 	  var z = zscore_val_arr_flag(val, arr, flag);
         return (sides == 1) ?
@@ -80,7 +81,7 @@ think below is for oop
     return (val - mean) / (sd / Math.sqrt(n));
   }
   
-   public static function tscore_val_arr(val:Float, arr:Array<Float>) {
+   public static function tscore_val_arr(val:Float, arr:Matrix) {
    
     return (val - Vector.mean(arr) /  (Vector.stdev(arr, true) / Math.sqrt(arr.length)));
   }
@@ -109,7 +110,7 @@ think below is for oop
 	
    
   
-    public static function ttest_val_arr_sides(value:Float, array:Array<Float>, sides:Int) {
+    public static function ttest_val_arr_sides(value:Float, array:Matrix, sides:Int) {
     
     var tscore = Math.abs(tscore_val_arr(value, array));
     return (sides == 1) ?
@@ -134,31 +135,31 @@ think below is for oop
   // or it is an array of arrays
   // array of arrays conversion
  
-  public static function anovafscore(arr:Array<Array<Float>>) {
+  public static function anovafscore(arr:Matrix) {
     
-    var expVar:Float, sample:Array<Float>, sampMean:Float, sampSampMean:Float, tmpargs:Float, unexpVar:Float, i, j;
+    var expVar:Float, sample:Matrix, sampMean:Float, sampSampMean:Float, tmpargs:Float, unexpVar:Float, i, j;
 
     
     // 2 sample case
     if (arr.length == 2) {
-      return  Vector.variance(arr[0]) / Vector.variance(arr[1]);
+      return  Vector.variance([arr[0]]) / Vector.variance([arr[1]]);
     }
     // Builds sample array
     sample = new Array();
     for (i in 0...arr.length) {
-      sample = sample.concat(arr[i]);
+      sample = sample.concat([arr[i]]);
     }
     sampMean = Vector.mean(sample);
     // Computes the explained variance
     expVar = 0;
     for (i in 0 ... arr.length) {
-      expVar = expVar + arr[i].length * Math.pow(Vector.mean(arr[i]) - sampMean, 2);
+      expVar = expVar + arr[i].length * Math.pow(Vector.mean([arr[i]]) - sampMean, 2);
     }
     expVar /= (arr.length - 1);
     // Computes unexplained variance
     unexpVar = 0;
     for (i in 0... arr.length) {
-      sampSampMean = Vector.mean(arr[i]);
+      sampSampMean = Vector.mean([arr[i]]);
       for (j in 0... arr[i].length) {
         unexpVar += Math.pow(arr[i][j] - sampSampMean, 2);
       }
@@ -169,7 +170,7 @@ think below is for oop
   
   // 2 different paramter setups
   // (array of arrays)
-  public static function anovaftest_arr(arr:Array<Array<Float>>):Float {
+  public static function anovaftest_arr(arr:Matrix):Float {
 
     var anovafscore = anovafscore(arr);
     var df1 = arr.length - 1;
@@ -209,7 +210,7 @@ think below is for oop
 // Error Bounds
   // 2 different parameter setups
   // (value, alpha, sd, n)
-  public static function normalci_val_alpha_sd_n(value:Float, alpha:Float, sd:Float, n:Int):Array<Float> {
+  public static function normalci_val_alpha_sd_n(value:Float, alpha:Float, sd:Float, n:Int):Matrix {
 
     var ans = new Array<Float>();
 
@@ -219,13 +220,13 @@ think below is for oop
     
     ans[0] = value - change;
     ans[1] = value + change;
-    return ans;
+    return [ans];
   }
   
 // Error Bounds
   // 2 different parameter setups
   // (value, alpha, array)
-  public static function normalci_val_alpha_arr(value:Float, alpha:Float, arr:Array<Float>):Array<Float> {
+  public static function normalci_val_alpha_arr(value:Float, alpha:Float, arr:Matrix):Matrix {
     
     var ans = new Array<Float>();
 
@@ -235,7 +236,7 @@ think below is for oop
     
     ans[0] = value - change;
     ans[1] = value + change;
-    return ans;
+    return [ans];
   }  
   
   
@@ -243,27 +244,27 @@ think below is for oop
 
   // 2 different parameter setups
   // (value, alpha, sd, n)
-  public static function tci_val_alpha_sd_n(value:Float, alpha:Float, sd:Float, n:Int) {
+  public static function tci_val_alpha_sd_n(value:Float, alpha:Float, sd:Float, n:Int):Matrix {
     var ans = new Array<Float>();
     var change:Float = Math.abs(Studentt.inv(alpha / 2, sd - 1) *
                         sd / Math.sqrt(n));
     
     ans[0] = value - change;
     ans[1] = value + change;
-    return ans;
+    return [ans];
   }
   
   
     // 2 different parameter setups
   // (value, alpha, array)
-  public static function tci_val_alpha_arr(value:Float, alpha:Float, arr:Array<Float>) {
+  public static function tci_val_alpha_arr(value:Float, alpha:Float, arr:Matrix):Matrix {
     var ans = new Array<Float>();
     var change:Float = Math.abs(Studentt.inv(alpha / 2, arr.length - 1) *
                         Vector.stdev(arr, true) / Math.sqrt(arr.length));
     
     ans[0] = value - change;
     ans[1] = value + change;
-    return ans;
+    return [ans];
   }
 
   public static function significant(pvalue, alpha) {

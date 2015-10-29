@@ -1,7 +1,8 @@
 package hstat;
 
-import hstat.Dimensions;
 import thx.Types;
+
+typedef Matrix = Array<Array<Float>>;
 
 class HStat
 {
@@ -9,9 +10,9 @@ class HStat
 public function new() {}
 	
 	
-public static function  create(rows:Int, cols: Null <Int> = null, func:Float->Float->Float):Array<Array<Float>> {
+public static function  create(rows:Int, cols: Null <Int> = null, func:Float->Float->Float):Matrix {
   if (cols == null) cols = rows;
-  var res = new Array<Array<Float>>();
+  var res = new Matrix();
   var i, j;
 
   for (i in 0...rows) {
@@ -25,19 +26,14 @@ public static function  create(rows:Int, cols: Null <Int> = null, func:Float->Fl
 	
 	
 
-	
+public static inline function check1D(m:Matrix):Void {
+	if (m.length > 1) throw "Matrix error. Was expected 1D matrix";
+}
 
-public static function map_arr(_arr:Array<Float>, func:Float->Float->Float->Float, ?toAlter:Bool = false):Array<Float> {
-		return map([_arr], func, toAlter)[0];
-	}
-	
-public static function map<T>(_arr:Array<T>, func:Float->Float->Float->Float , ?toAlter:Bool = false):Array<T> {
-	
-	  if (Dimensions.getDimensions(_arr) == Dimension_type.List ) return _map ([_arr], func, toAlter)[0];
-	  return _map(_arr, func, toAlter);
-	}
-	
-private static function _map<T>(_arr:Array<T>, func:Float->Float->Float->Float , ?toAlter:Bool = false):Array<T> {
+
+
+private static function map(_arr:Matrix, func:Float->Float->Float->Float , ?toAlter:Bool = false):Matrix {
+
 	var row, nrow:Int, ncol:Int, res, col;
 	  var arr = _arr;
 
@@ -78,15 +74,12 @@ public static function calcRdx(n:Float, m:Float):Float {
 
 
 
-
-
-// Converts the jStat matrix to vector.
-public static function toVector(arr:Array<Array<Float>>):Array<Float> {
-	var arr2:Array<Float> = new Array<Float>();
+public static function toVector(arr:Matrix):Matrix {
+	var arr2:Matrix = new Matrix();
 
 	for (col in 0...arr.length) {
 		for(row in 0...arr[0].length){
-			arr2[arr.length] = arr[col][row];
+			arr2[0][arr2.length] = arr[col][row];
 		}
 	}
 	
@@ -95,7 +88,7 @@ public static function toVector(arr:Array<Array<Float>>):Array<Float> {
 
 
 // Returns the number of rows in the matrix.
-public static function rows(arr:Array<Array<Float>>):Int {
+public static function rows(arr:Matrix):Int {
 	var len:Int = arr.length;
 	if (len == 0) len = 1;
 	return len;
@@ -103,7 +96,7 @@ public static function rows(arr:Array<Array<Float>>):Int {
 
 
 // Returns the number of columns in the matrix.
-public static function cols(arr:Array<Array<Float>>):Int {
+public static function cols(arr:Matrix):Int {
 var len:Int = arr[0].length;
 	if (len == 0) len = 1;
 	return len;
@@ -111,38 +104,38 @@ var len:Int = arr[0].length;
 
 
 // Returns the dimensions of the object { rows: i, cols: j }
-public static function dimensions(arr:Array<Array<Float>>):Map<String,Int> {
+public static function dimensions(arr:Matrix):Map<String,Int> {
 	return ['rows' => rows(arr), 'cols' => cols(arr)];
 }
 
 
 // Returns a specified row as a vector
-public static function row_arr(arr:Array<Array<Float>>, index:Int):Array<Float> {
-  return arr[index];
+public static function row_arr(arr:Matrix, index:Int):Matrix {
+  return [arr[index]];
 }
 
 
 // Returns the specified column as a vector
-public static function cols_arr(arr:Array<Array<Float>>, index:Int):Array<Float> {
+public static function cols_arr(arr:Matrix, index:Int):Matrix {
   var column = new Array<Float>();
   for (i in 0... arr.length)
     column[i] = arr[i][index];
-  return column;
+  return [column];
 }
 
 
 // Returns the diagonal of the matrix
-public static function diag(arr:Array<Array<Float>>):Array<Float> {
+public static function diag(arr:Matrix):Matrix {
   var nrow = rows(arr);
   var res = new Array<Float>();
   for (row in 0... nrow)
     res[row] = arr[row][row];
-  return res;
+  return [res];
 }
 
 
 // Returns the anti-diagonal of the matrix
-public static function antidiag(arr:Array<Array<Float>>):Array<Float> {
+public static function antidiag(arr:Matrix):Matrix {
   var nrow = rows(arr) - 1;
   var res = new Array<Float>();
   var i:Int = 0;
@@ -151,17 +144,14 @@ public static function antidiag(arr:Array<Array<Float>>):Array<Float> {
 	i++;
     res[i] = arr[i][nrow];
   }
-  return res;
+  return [res];
 }
 
 
-public function transpose_arr(arr:Array<Float>):Array<Float> {
-	return transpose([arr])[0];
-}
 
 // Transpose a matrix or array.
-public static function transpose(arr:Array<Array<Float>>):Array<Array<Float>> {
-  var obj = [];
+public static function transpose(arr:Matrix):Matrix {
+  var obj:Matrix = [];
   var objArr, rows, cols, j, i;
 
   rows = arr.length;
@@ -179,21 +169,18 @@ public static function transpose(arr:Array<Array<Float>>):Array<Array<Float>> {
 }
 
 
-public static function cumreduce_arr(arr:Array<Float>, func:Float -> Float -> Float -> Float, toAlter:Bool) {
-	return cumreduce([arr],func, toAlter)[0];
-}
 
 
-public static function cumreduce(arr:Array<Array<Float>>, func:Float -> Float -> Float -> Float, toAlter:Bool) {
-  var row:Int, nrow:Int, ncol:Int, res:Array<Dynamic>, col:Int;
+public static function cumreduce(arr:Matrix, func:Float -> Float -> Float -> Float, toAlter:Bool):Matrix  {
+  var row:Int, nrow:Int, ncol:Int, res:Matrix, col:Int;
 
   nrow = arr.length;
   ncol = arr[0].length;
-  res = toAlter ? arr : new Array<Float>();
+  res = toAlter ? arr : new Matrix();
 
   for (row in 0... nrow) {
     // if the row doesn't exist, create it
-    if (!res[row])	res[row] = new Array<Float>();
+    if (res.length-1<row )	res[row] = new Array<Float>();
     
 	if (ncol > 0)	res[row][0] = arr[row][0];
     
@@ -206,12 +193,7 @@ public static function cumreduce(arr:Array<Array<Float>>, func:Float -> Float ->
 
 
 // Destructively alter an array.
-public static function alter_arr(arr:Array<Float>, func:Float -> Float->Float->Float) {
-  return map_arr(arr, func, true);
-}
-
-// Destructively alter an array.
-public static function alter(arr:Array<Array<Float>>, func:Float -> Float->Float->Float) {
+public static function alter(arr:Matrix, func:Float -> Float->Float->Float):Matrix  {
   return map(arr, func, true);
 }
 
@@ -220,7 +202,7 @@ public static function alter(arr:Array<Array<Float>>, func:Float -> Float->Float
 
 
 // Generate a rows x cols matrix of zeros.
-public static function zeros(rows:Int, cols:Int):Array<Array<Float>> {
+public static function zeros(rows:Int, cols:Int):Matrix {
   //if (!isNumber(cols))
     //cols = rows;
   return create(rows, cols, retZero);
@@ -231,7 +213,7 @@ public static function retOne(i:Float, j:Float):Float { return 1; }
 
 
 // Generate a rows x cols matrix of ones.
-public static function ones(rows, cols):Array<Array<Float>> {
+public static function ones(rows, cols):Matrix {
   //if (!isNumber(cols))
     //cols = rows;
   return create(rows, cols, retOne);
@@ -239,7 +221,7 @@ public static function ones(rows, cols):Array<Array<Float>> {
 
 
 // Generate a rows x cols matrix of uniformly random numbers.
-public static function rand(rows:Int, ?cols:Null<Int> = null):Array<Array<Float>> {
+public static function rand(rows:Int, ?cols:Null<Int> = null):Matrix {
   if (cols == null) cols = rows;
   return create(rows, cols, _rand);
 }
@@ -263,7 +245,7 @@ public static function identity(rows:Int, cols:Int) {
 
 
 // Tests whether a matrix is symmetric
-public static function symmetric(arr:Array<Array<Float>>):Bool {
+public static function symmetric(arr:Matrix):Bool {
   var issymmetric = true;
   var size = arr.length;
   var row, col;
@@ -285,14 +267,9 @@ public static function retZero3 (a:Float, b:Float, c:Float):Float {
 }
 
 
-// Set all values to zero.
-public static function clear_arr(arr:Array<Float>):Array<Float> {
-
-  return alter_arr(arr, retZero3);
-}
 
 // Set all values to zero.
-public static function clear(arr:Array<Array<Float>>):Array<Array<Float>> {
+public static function clear(arr:Matrix):Matrix {
   return alter(arr, retZero3);
 }
 

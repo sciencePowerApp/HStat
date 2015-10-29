@@ -6,11 +6,11 @@ class Variance_test{
 	public function new() { };
 
     public function test_return_basic_variance() {
-      Assert.equals(Vector.variance([1, 2, 3, 4]), 1.25);
+      Assert.equals(Vector.variance([[1, 2, 3, 4]]), 1.25);
 	}
 
     public function test_return_basic_variance_using_sample() {
-      Assert.equals(Vector.variance([1, 2, 3, 4, 5], true), 2.5);
+      Assert.equals(Vector.variance([[1, 2, 3, 4, 5]], true), 2.5);
 	}
 
   /*  public function test_variance_from_instance() {

@@ -6,7 +6,7 @@ class Meandev_test{
 	public function new() { };
 
     public function test_return_basic_meandev() {
-		Assert.equals(Vector.meandev([1, 2, 3, 4]),1);
+		Assert.equals(Vector.meandev([[1, 2, 3, 4]]),1);
 	}
 
 /*    public function test_meandev_from_instance() {

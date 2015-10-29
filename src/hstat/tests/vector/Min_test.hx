@@ -6,7 +6,7 @@ class Min_test{
 	public function new() { };
 
     public function test_return_basic_min() {
-      Assert.equals(Vector.min([1, 2, 3]), 1);
+      Assert.equals(Vector.min([[1, 2, 3]]), 1);
 	}
 
   /*  public function test_min_from_instance() {

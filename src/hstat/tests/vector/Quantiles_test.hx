@@ -6,8 +6,8 @@ class Quantiles_test{
 	public function new() { };
 
     public function test_return_basic_quantiles() {
-      Assert.equals(Vector.quantiles([1, 2, 3, 4, 5, 6],
-                                       [0.25, 0.5, 0.75]).toString(),
+      Assert.equals(Vector.quantiles([[1, 2, 3, 4, 5, 6]],
+                                       [[0.25, 0.5, 0.75]]).toString(),
                                        [1.9375, 3.5, 5.0625].toString());
 	}
 
@@ -26,12 +26,12 @@ class Quantiles_test{
                  -9.28064583,  0.13434825];
 
         var quantiles = [0.1, 0.3, 0.5, 0.8];
-        var results = Vector.quantiles(arr, quantiles);
+        var results = Vector.quantiles([arr], [quantiles]);
         var expected = [-6.59764031,  0.55426323,  3.30694202,  8.35197644];
         var i;
 
         for (i in 0... quantiles.length) {
-          Assert.floatEquals( results[i], expected[i]);
+          Assert.floatEquals( results[0][i], expected[i]);
         }
 	}
 

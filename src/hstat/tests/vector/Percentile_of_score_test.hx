@@ -6,8 +6,8 @@ class Percentile_of_score_test{
 	public function new() { };
 
     public function test_return_basic_percentile_of_score() {
-      Assert.equals(Vector.percentileOfScore([1, 2, 3, 4, 5, 6], 3), 0.5);
-      Assert.floatEquals(Vector.percentileOfScore([1, 2, 3, 4, 5, 6], 5),
+      Assert.equals(Vector.percentileOfScore([[1, 2, 3, 4, 5, 6]], 3), 0.5);
+      Assert.floatEquals(Vector.percentileOfScore([[1, 2, 3, 4, 5, 6]], 5),
                      0.83333333333333343);
 	}
 

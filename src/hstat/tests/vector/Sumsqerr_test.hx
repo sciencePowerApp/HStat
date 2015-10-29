@@ -6,7 +6,7 @@ class Sumsqerr_test{
 	public function new() { };
 
     public function test_return_basic_sumsqerr() {
-      Assert.equals(Vector.sumsqerr([1, 2, 3]), 2);
+      Assert.equals(Vector.sumsqerr([[1, 2, 3]]), 2);
 	}
 
 /*    public function test_sumsqerr_from_instance() {

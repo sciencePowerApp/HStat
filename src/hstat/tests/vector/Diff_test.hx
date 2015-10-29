@@ -6,7 +6,7 @@ class Diff_test{
 	public function new() { };
 
     public function test_return_basic_diff() {
-      Assert.equals(Vector.diff([1, 2, 3]).toString(), [1, 1].toString());
+      Assert.equals(Vector.diff([[1, 2, 3]])[0].toString(), [1, 1].toString());
 	}  
 	  
 /*	public function test_diff_from_instance() {

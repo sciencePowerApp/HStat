@@ -6,7 +6,7 @@ class Sumrow_test{
 	public function new() { };
 
     public function test_return_basic_sumrow() {
-      Assert.equals(Vector.sumrow([1, 2, 3]), 6);
+      Assert.equals(Vector.sumrow([[1, 2, 3]]), 6);
 	}
 
     /*public function test_sumrow_from_instance() {

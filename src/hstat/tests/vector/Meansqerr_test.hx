@@ -6,7 +6,7 @@ class Meansqerr_test{
 	public function new() { };
 
     public function test_return_basic_meansqerr() {
-      Assert.equals(Vector.meansqerr([1, 2, 3, 4]), 1.25);
+      Assert.equals(Vector.meansqerr([[1, 2, 3, 4]]), 1.25);
 	}
 
    /* public function test_meansqerr_from_instance() {

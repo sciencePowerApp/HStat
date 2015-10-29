@@ -7,7 +7,7 @@ class Histogram_test{
 
     public function test_returns_histogram() {
       Assert.equals(
-          Vector.histogram([1, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8],4).toString(), [4, 2, 3, 2].toString());
+          Vector.histogram([[1, 1, 2, 2, 3, 4, 5, 5, 6, 7, 8]],4)[0].toString(), [4, 2, 3, 2].toString());
 	}
 
     /*public function test_histogram_from_instance() {
@@ -27,7 +27,7 @@ class Histogram_test{
 	}*/
 
     public function test_documentation_values() {
-      Assert.equals(Vector.histogram([100, 101, 102, 230, 304, 305, 400], 3).toString(), [3, 1, 3].toString());
+      Assert.equals(Vector.histogram([[100, 101, 102, 230, 304, 305, 400]], 3)[0].toString(), [3, 1, 3].toString());
     }
   
 }

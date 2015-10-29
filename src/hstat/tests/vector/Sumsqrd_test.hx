@@ -6,7 +6,7 @@ class Sumsqrd_test{
 	public function new() { };
 
     public function test_return_basic_sumsqrd() {
-      Assert.equals(Vector.sumsqrd([1, 2, 3]), 14);
+      Assert.equals(Vector.sumsqrd([[1, 2, 3]]), 14);
 	}
 
     /*public function test_sumsqrd_from_instance() {

@@ -6,7 +6,7 @@ class Meddev_test{
 	public function new() { };
 
     public function test_return_basic_meddev() {
-      Assert.equals(Vector.meddev([1, 2, 3, 4]), 1);
+      Assert.equals(Vector.meddev([[1, 2, 3, 4]]), 1);
 	}
 	
 	/* public function test_meddev_from_instance() {

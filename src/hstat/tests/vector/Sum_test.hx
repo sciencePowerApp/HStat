@@ -6,7 +6,7 @@ class Sum_test{
 	public function new() { };
 
     public function test_return_basic_sum() {
-      Assert.equals(Vector.sum([1, 2, 3]), 6);
+      Assert.equals(Vector.sum([[1, 2, 3]]), 6);
 	}
 
     /*public function test_sum_from_instance() {

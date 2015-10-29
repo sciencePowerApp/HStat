@@ -6,7 +6,7 @@ class Range_test{
 	public function new() { };
 
     public function test_return_basic_range() {
-      Assert.equals(Vector.range([1, 2, 3]), 2);
+      Assert.equals(Vector.range([[1, 2, 3]]), 2);
 	}
 
    /* public function test_range_from_instance() {
