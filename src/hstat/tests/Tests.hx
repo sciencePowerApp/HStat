@@ -16,7 +16,7 @@ import hstat.tests.distribution.Pareto_test;
 import hstat.tests.distribution.Student_t_test;
 import hstat.tests.distribution.Triangular_test;
 import hstat.tests.distribution.Uniform_test;
-import hstat.tests.linearalgebra.Add_test;
+import hstat.tests.linearalgebra.Basic_test;
 import hstat.tests.special.Gammafn_test;
 import hstat.tests.special.Gammap_test;
 import hstat.tests.special.General_test;
@@ -91,7 +91,7 @@ class Tests
 		runner.addCase(new Uniform_test());
 		
 		//Linear algebra
-		runner.addCase(new Add_test());
+		runner.addCase(new Basic_test());
 		
 		
 		//Special

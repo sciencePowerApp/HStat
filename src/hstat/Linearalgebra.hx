@@ -11,7 +11,7 @@ import hstat.HStat.Matrix;
 class Argument {
 	
 	var m:Matrix;
-	var D1:Bool; //1 dimensional
+	public var D1:Bool; //1 dimensional
 	var val:Float;
 	
 	public function new(_m:Matrix) {
@@ -20,10 +20,13 @@ class Argument {
 			D1 = true;
 			val = m[0][0];
 		}
+		else D1 = false;
 	}
 	
 	public function get(row:Float, col:Float):Float {
-		if (D1) return val;
+		if (D1) {
+			return val;
+		}
 		return m[Std.int(row)][Std.int(col)];
 	}
 }
@@ -36,126 +39,123 @@ class Linearalgebra
 
 	public static function add(arr:Matrix, arg:Matrix):Matrix {
 		var a:Argument = new Argument(arg);
-		
-		trace(HStat.map(arr, 
-			function(value:Float, row:Float, col:Float):Float {
-				return value + a.get(row,col); 
-			}));
-		
+
 		return HStat.map(arr, 
 			function(value:Float, row:Float, col:Float):Float {
 				return value + a.get(row,col); 
 			});
     }
 	
-	/*public static function add_arr(arr:Matrix, arg:Array<Float>) {
-    // check if arg is a vector or scalar
-	var _arg:Matrix = [arg];
-    return HStat.map(arr, function(value:Float, row:Float, col:Float):Float {
-		if (_arg[Std.int(row)][Std.int(col)] == null) return 0;
-        return value + _arg[Std.int(row)][Std.int(col)];
-      });
-    }
+
 	
-	public static function subtract(arr:Matrix, arg:Float):Matrix {
+	public static function subtract(arr:Matrix, arg:Matrix):Matrix {
+		var a:Argument = new Argument(arg);
+
 		return HStat.map(arr, 
 			function(value:Float, row:Float, col:Float):Float {
-				return value - arg; 
+				return value - a.get(row,col); 
 			});
     }
+
 	
-	public static function subtract_arr(arr:Matrix, arg:Array<Float>) {
-    // check if arg is a vector or scalar
-	var _arg:Matrix = [arg];
-    return HStat.map(arr, function(value:Float, row:Float, col:Float):Float {
-		if (_arg[Std.int(row)][Std.int(col)] == null) return 0;
-        return value - _arg[Std.int(row)][Std.int(col)];
-      });
-    }
-   
-	
-	public static function divide(arr:Matrix, arg:Float):Matrix {
+	public static function divide(arr:Matrix, arg:Matrix):Matrix {
+		var a:Argument = new Argument(arg);
+
 		return HStat.map(arr, 
 			function(value:Float, row:Float, col:Float):Float {
-				return value / arg; 
+				return value / a.get(row,col); 
 			});
     }
-	
-	
-	
-	
-	public static function divide_arr(arr:Matrix, arg:Array<Float>) {
-    // check if arg is a vector or scalar
-	var _arg:Matrix = [arg];
-    return multiply(_arr, inv(_arg));
-    }
-	
-	
 
 
   // matrix multiplication
-  public static function multiply(arr:Matrix, arg:Array<Float>) {
-    var row, col, nrescols, sum,
-    nrow = arr.length,
-    ncol = arr[0].length,
-    res = HStat.zeros(nrow, nrescols = (isArray(arg)) ? arg[0].length : ncol),
-    rescols = 0;
-    if (isArray(arg)) {
-      for (rescols in 0... nrescols) {
-        for (row in 0... nrow) {
-          sum = 0;
-          for (col in 0... ncol)
-          sum += arr[row][col] * arg[col][rescols];
-          res[row][rescols] = sum;
-        }
-      }
-      return (nrow == 1 && rescols == 1) ? res[0][0] : res;
+  //AW taken from JS version here http://rosettacode.org/wiki/Matrix_multiplication#JavaScript
+  public static function multiply(arr:Matrix, arg:Matrix) {
+    if (arg[0].length == 1) {
+	    var a:Argument = new Argument(arg);
+
+		return HStat.map(arr, 
+			function(value:Float, row:Float, col:Float):Float {
+				return value * a.get(row,col); 
+			});
+	}
+	else if(arr[0].length != arg.length) {
+        throw "error: incompatible sizes";
     }
-    return HStat.map(arr, function(value) { return value * arg; });
+	var sum:Float;
+    var result:Matrix = new Matrix();
+    for (i in 0...arr.length) {
+        result[i] = new Array<Float>();
+        for (j in 0...arg[0].length) {
+            sum = 0;
+            for (k in 0 ... arr[0].length) {
+                sum += arr[i][k] * arg[k][j];
+            }
+            result[i][j] = sum;
+        }
+    }
+    return result; 
+
   }
+  
+  
 
   // Returns the dot product of two matricies
-  public static function dot(arr, arg) {
-    if (!isArray(arr[0])) arr = [ arr ];
-    if (!isArray(arg[0])) arg = [ arg ];
+  public static function dot(arr:Matrix, arg:Matrix):Float {
+
     // convert column to row vector
-    var left = (arr[0].length == 1 && arr.length != 1) ? jStat.transpose(arr) : arr,
-    right = (arg[0].length == 1 && arg.length != 1) ? jStat.transpose(arg) : arg,
-    res = [],
-    row = 0,
-    nrow = left.length,
-    ncol = left[0].length,
-    sum, col;
-    for (row in 0... nrow) {
-      res[row] = [];
+    var left:Matrix = (arr[0].length == 1 && arr.length != 1) ? HStat.transpose(arr) : arr;
+    var right:Matrix = (arg[0].length == 1 && arg.length != 1) ? HStat.transpose(arg) : arg;
+    var sum:Float = 0;
+	
+	
+    for (row in 0... left.length) {
+
       sum = 0;
-      for (col in 0... ncol)
+      for (col in 0... left[0].length)
       sum += left[row][col] * right[row][col];
-      res[row] = sum;
     }
-    return (res.length == 1) ? res[0] : res;
+    return sum;
   }
+  
+  
 
   // raise every element by a scalar
   public static function pow(arr, arg) {
-    return HStat.map(arr, function(value) { return Math.pow(value, arg); });
+	  var a:Argument = new Argument(arg);
+
+		return HStat.map(arr, 
+			function(value:Float, row:Float, col:Float):Float {
+				return Math.pow(value , a.get(row,col)); 
+			});
   }
 
   // exponentiate every element
   public static function exp(arr) {
-    return HStat.map(arr, function(value) { return Math.exp(value); });
+		return HStat.map(arr, 
+			function(value:Float, row:Float, col:Float):Float {
+				return Math.exp(value); 
+			});
   }
 
   // generate the natural log of every element
   public static function log(arr) {
-    return HStat.map(arr, function(value) { return Math.log(value); });
+
+		return HStat.map(arr, 
+			function(value:Float, row:Float, col:Float):Float {
+				return Math.log(value); 
+			});
   }
 
   // generate the absolute values of the vector
   public static function abs(arr) {
-    return HStat.map(arr, function(value) { return Math.abs(value); });
-  }
 
+		return HStat.map(arr, 
+			function(value:Float, row:Float, col:Float):Float {
+				return Math.abs(value); 
+			});
+  }
+/*
   // computes the p-norm of the vector
   // In the case that a matrix is passed, uses the first row as the vector
   public static function norm(arr, p) {
