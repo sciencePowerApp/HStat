@@ -32,7 +32,7 @@ public static inline function check1D(m:Matrix):Void {
 
 
 
-private static function map(_arr:Matrix, func:Float->Float->Float->Float , ?toAlter:Bool = false):Matrix {
+public static function map(_arr:Matrix, func:Float->Float->Float->Float , ?toAlter:Bool = false):Matrix {
 
 	var row, nrow:Int, ncol:Int, res, col;
 	  var arr = _arr;

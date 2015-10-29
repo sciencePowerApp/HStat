@@ -1,5 +1,7 @@
 package hstat;
+import hstat.HStat;
 import hstat.HStat.Matrix;
+
 
 /**
  * ...

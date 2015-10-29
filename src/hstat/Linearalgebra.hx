@@ -1,43 +1,72 @@
 package hstat;
+import hstat.HStat;
+import hstat.HStat.Matrix;
 
 /**
  * ...
  * @author 
  */
+
+//as it is a total pain in the ars#
+class Argument {
+	
+	var m:Matrix;
+	var D1:Bool; //1 dimensional
+	var val:Float;
+	
+	public function new(_m:Matrix) {
+		m = _m;
+		if (m[0].length == 1) {
+			D1 = true;
+			val = m[0][0];
+		}
+	}
+	
+	public function get(row:Float, col:Float):Float {
+		if (D1) return val;
+		return m[Std.int(row)][Std.int(col)];
+	}
+}
+ 
+ 
 class Linearalgebra
 {
 
-	public function new() 
-	{
+	public function new() { }
+
+	public static function add(arr:Matrix, arg:Matrix):Matrix {
+		var a:Argument = new Argument(arg);
 		
-	}
-	
-	public function add(arr:Array<Array<Float>>, arg:Float):Array<Array<Float>> {
+		trace(HStat.map(arr, 
+			function(value:Float, row:Float, col:Float):Float {
+				return value + a.get(row,col); 
+			}));
+		
 		return HStat.map(arr, 
 			function(value:Float, row:Float, col:Float):Float {
-				return value + arg; 
+				return value + a.get(row,col); 
 			});
     }
 	
-	public function add_arr(arr:Array<Array<Float>>, arg:Array<Float>) {
+	/*public static function add_arr(arr:Matrix, arg:Array<Float>) {
     // check if arg is a vector or scalar
-	var _arg:Array<Array<Float>> = [arg];
+	var _arg:Matrix = [arg];
     return HStat.map(arr, function(value:Float, row:Float, col:Float):Float {
 		if (_arg[Std.int(row)][Std.int(col)] == null) return 0;
         return value + _arg[Std.int(row)][Std.int(col)];
       });
     }
 	
-	public function subtract(arr:Array<Array<Float>>, arg:Float):Array<Array<Float>> {
+	public static function subtract(arr:Matrix, arg:Float):Matrix {
 		return HStat.map(arr, 
 			function(value:Float, row:Float, col:Float):Float {
 				return value - arg; 
 			});
     }
 	
-	public function subtract_arr(arr:Array<Array<Float>>, arg:Array<Float>) {
+	public static function subtract_arr(arr:Matrix, arg:Array<Float>) {
     // check if arg is a vector or scalar
-	var _arg:Array<Array<Float>> = [arg];
+	var _arg:Matrix = [arg];
     return HStat.map(arr, function(value:Float, row:Float, col:Float):Float {
 		if (_arg[Std.int(row)][Std.int(col)] == null) return 0;
         return value - _arg[Std.int(row)][Std.int(col)];
@@ -45,7 +74,7 @@ class Linearalgebra
     }
    
 	
-	public function divide(arr:Array<Array<Float>>, arg:Float):Array<Array<Float>> {
+	public static function divide(arr:Matrix, arg:Float):Matrix {
 		return HStat.map(arr, 
 			function(value:Float, row:Float, col:Float):Float {
 				return value / arg; 
@@ -55,9 +84,9 @@ class Linearalgebra
 	
 	
 	
-	public function divide_arr(arr:Array<Array<Float>>, arg:Array<Float>) {
+	public static function divide_arr(arr:Matrix, arg:Array<Float>) {
     // check if arg is a vector or scalar
-	var _arg:Array<Array<Float>> = [arg];
+	var _arg:Matrix = [arg];
     return multiply(_arr, inv(_arg));
     }
 	
@@ -65,7 +94,7 @@ class Linearalgebra
 
 
   // matrix multiplication
-  public function multiply(arr:Array<Array<Float>>, arg:Array<Float>) {
+  public static function multiply(arr:Matrix, arg:Array<Float>) {
     var row, col, nrescols, sum,
     nrow = arr.length,
     ncol = arr[0].length,
@@ -86,7 +115,7 @@ class Linearalgebra
   }
 
   // Returns the dot product of two matricies
-  public function dot(arr, arg) {
+  public static function dot(arr, arg) {
     if (!isArray(arr[0])) arr = [ arr ];
     if (!isArray(arg[0])) arg = [ arg ];
     // convert column to row vector
@@ -108,28 +137,28 @@ class Linearalgebra
   }
 
   // raise every element by a scalar
-  public function pow(arr, arg) {
+  public static function pow(arr, arg) {
     return HStat.map(arr, function(value) { return Math.pow(value, arg); });
   }
 
   // exponentiate every element
-  public function exp(arr) {
+  public static function exp(arr) {
     return HStat.map(arr, function(value) { return Math.exp(value); });
   }
 
   // generate the natural log of every element
-  public function log(arr) {
+  public static function log(arr) {
     return HStat.map(arr, function(value) { return Math.log(value); });
   }
 
   // generate the absolute values of the vector
-  public function abs(arr) {
+  public static function abs(arr) {
     return HStat.map(arr, function(value) { return Math.abs(value); });
   }
 
   // computes the p-norm of the vector
   // In the case that a matrix is passed, uses the first row as the vector
-  public function norm(arr, p) {
+  public static function norm(arr, p) {
     var nnorm = 0,
     i = 0;
     // check the p-value of the norm, and set for most common case
@@ -145,13 +174,13 @@ class Linearalgebra
 
   // computes the angle between two vectors in rads
   // In case a matrix is passed, this uses the first row as the vector
-  public function angle(arr, arg) {
+  public static function angle(arr, arg) {
     return Math.acos(dot(arr, arg) / (jStat.norm(arr) * jStat.norm(arg)));
   }
 
   // augment one matrix by another
   // Note: this function returns a matrix, not a jStat object
-  public function aug(a, b) {
+  public static function aug(a, b) {
     var newarr = [];
     for (i in 0... a.length) {
       newarr.push(a[i].slice());
@@ -165,7 +194,7 @@ class Linearalgebra
   // The inv() function calculates the inverse of a matrix
   // Create the inverse by augmenting the matrix by the identity matrix of the
   // appropriate size, and then use G-J elimination on the augmented matrix.
-  public function inv(a) {
+  public static function inv(a) {
     var rows = a.length;
     var cols = a[0].length;
     var b = jStat.identity(rows, cols);
@@ -184,7 +213,7 @@ class Linearalgebra
   }
 
   // calculate the determinant of a matrix
-  public function det(a) {
+  public static function det(a) {
     var alen = a.length,
     alend = alen * 2,
     vals = new Array(alend),
@@ -221,7 +250,7 @@ class Linearalgebra
     return result;
   }
 
-  public function gauss_elimination(a, b) {
+  public static function gauss_elimination(a, b) {
     var i = 0,
     j = 0,
     n = a.length,
@@ -267,7 +296,7 @@ class Linearalgebra
     return x;
   }
 
-  public function gauss_jordan(a, b) {
+  public static function gauss_jordan(a, b) {
     var m = jStat.aug(a, b),
     h = m.length,
     w = m[0].length;
@@ -308,15 +337,15 @@ class Linearalgebra
     return m;
   }
 
-  public function lu(a, b) {
+  public static function lu(a, b) {
     throw new Error('lu not yet implemented');
   }
 
-  public function cholesky(a, b) {
+  public static function cholesky(a, b) {
     throw new Error('cholesky not yet implemented');
   }
 
-  public function gauss_jacobi(a:Array<Array<Float>>, b, x, r) {
+  public static function gauss_jacobi(a:Matrix, b, x, r) {
     var i = 0;
     var j = 0;
     var n = a.length;
@@ -354,7 +383,7 @@ class Linearalgebra
     return xk;
   }
 
-  public function gauss_seidel(a, b, x, r) {
+  public static function gauss_seidel(a, b, x, r) {
     var i = 0;
     var n = a.length;
     var l = [];
@@ -391,7 +420,7 @@ class Linearalgebra
     return xk;
   }
 
-  public function SOR(a, b, x, r, w) {
+  public static function SOR(a, b, x, r, w) {
     var i = 0;
     var n = a.length;
     var l = [];
@@ -431,7 +460,7 @@ class Linearalgebra
     return xk;
   }
 
-  public function householder(a) {
+  public static function householder(a) {
     var m = a.length;
     var n = a[0].length;
     var i = 0;
@@ -456,7 +485,7 @@ class Linearalgebra
   }
 
   // TODO: not working properly.
-  public function QR(a, b) {
+  public static function QR(a, b) {
     var m = a.length;
     var n = a[0].length;
     var i = 0;
@@ -490,7 +519,7 @@ class Linearalgebra
     return x;
   }
 
-  public function jacobi(a) {
+  public static function jacobi(a) {
     var condition = 1;
     var count = 0;
     var n = a.length;
@@ -541,7 +570,7 @@ class Linearalgebra
     return [e, ev];
   }
 
-  public function rungekutta(f, h, p, t_j, u_j, order) {
+  public static function rungekutta(f, h, p, t_j, u_j, order) {
     var k1, k2, u_j1, k3, k4;
     if (order == 2) {
       while (t_j <= p) {
@@ -566,7 +595,7 @@ class Linearalgebra
     return u_j;
   }
 
-  public function romberg(f, a, b, order) {
+  public static function romberg(f, a, b, order) {
     var i = 0;
     var h = (b - a) / 2;
     var x = [];
@@ -602,7 +631,7 @@ class Linearalgebra
     return g;
   }
 
-  public function richardson(X, f, x, h) {
+  public static function richardson(X, f, x, h) {
     function pos(X, x) {
       var i = 0;
       var n = X.length;
@@ -637,7 +666,7 @@ class Linearalgebra
     return g;
   }
 
-  public function simpson(f, a, b, n) {
+  public static function simpson(f, a, b, n) {
     var h = (b - a) / n;
     var I = f(a);
     var x = [];
@@ -656,7 +685,7 @@ class Linearalgebra
     return (h / 3) * (I + f(b));
   }
 
-  public function hermite(X, F, dF, value) {
+  public static function hermite(X, F, dF, value) {
     var n = X.length;
     var p = 0;
     var i = 0;
@@ -681,7 +710,7 @@ class Linearalgebra
     return p;
   }
 
- public function lagrange(X, F, value) {
+ public static function lagrange(X, F, value) {
     var p = 0;
     var i = 0;
     var j, l;
@@ -698,7 +727,7 @@ class Linearalgebra
     return p;
   }
 
-  public function cubic_spline(X, F, value) {
+  public static function cubic_spline(X, F, value) {
     var n = X.length;
     var i = 0, j;
     var A = [];
@@ -736,11 +765,11 @@ class Linearalgebra
         c[j] + (value - X[j]) * jStat.sq(value - X[j]) * d[j];
   }
 
-  public function gauss_quadrature() {
+  public static function gauss_quadrature() {
     throw new Error('gauss_quadrature not yet implemented');
   }
 
-  public function PCA(X) {
+  public static function PCA(X) {
     var m = X.length;
     var n = X[0].length;
     var flag = false;
@@ -796,6 +825,6 @@ class Linearalgebra
       }
     }
     return [X, D, Vt, Y];
-  }
+  }*/
 }
 	

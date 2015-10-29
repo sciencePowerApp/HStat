@@ -440,7 +440,7 @@ public static  function randg(shape:Null<Float>, n:Null<Float> = null, m:Null<Fl
   if (shape == null)
     shape = 1;
   if (n != null) {
-    //mat = Hstat.zeros(n,m);
+    //mat = HStat.zeros(n,m);
     //mat.alter(function(fakea:Dynamic, fakeb:Dynamic) { return Special.randg(shape, null, null); });
     throw "not impl";
 	//eturn mat;
