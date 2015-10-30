@@ -7,7 +7,7 @@
     ],
     "description": "Haxe port of Jstat",
     "contributors": [
-        "andywoods"
+        "andywoods","ianharrigan"
     ],
     "releasenote": "",
     "version": "1.0.1",
