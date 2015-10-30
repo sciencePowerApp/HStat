@@ -1,7 +1,5 @@
 package hstat;
 
-import thx.Types;
-
 typedef Matrix = Array<Array<Float>>;
 
 class HStat

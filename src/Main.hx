@@ -5,7 +5,6 @@ package;
 import hstat.tests.Tests;
 import openfl.display.Sprite;
 import openfl.Lib;
-import thx.Types;
 
 /**
  * ...

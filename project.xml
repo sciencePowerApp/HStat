@@ -16,7 +16,7 @@
 	<source path="src" />
 	<haxelib name="openfl" />
 	<haxelib name="actuate" />
-	<haxelib name="thx.core" />
+	<!--<haxelib name="thx.core" />-->
 	<haxelib name="utest" />
 	<!-- assets -->
 	<icon path="assets/openfl.svg" />
