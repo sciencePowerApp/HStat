@@ -1,3 +1,3 @@
-del bin\hx-mathml.zip
-7za a bin\hx-mathml.zip haxelib.json include.xml assets learnmath
-haxelib local bin\hx-mathml.zip
+del bin\HStat.zip
+7za a bin\HStat.zip haxelib.json src/hstat
+haxelib local bin\HStat.zip
