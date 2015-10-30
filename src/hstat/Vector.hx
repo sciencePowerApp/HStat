@@ -261,9 +261,10 @@ class Vector
 	  return [v];
 	}
 	
-	public static function copyArr(a:Matrix):Matrix {
+	public static function copy(a:Matrix):Matrix {
 		var copy:Matrix = new Matrix();
 		for (x in 0...a.length) {
+			copy[x] = new Array<Float>();
 			for (y in 0...a[x].length) {
 				copy[x][y] = a[x][y];
 			}

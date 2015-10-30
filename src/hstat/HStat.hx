@@ -237,9 +237,9 @@ public static function retIdent(i:Float , j:Float):Int {
 
 
 // Generate an identity matrix of size row x cols.
-public static function identity(rows:Int, cols:Int) {
-  //if (!isNumber(cols))
-  //  cols = rows;
+public static function identity(rows:Int, cols:Int = -1) {
+  if (cols == -1) cols = rows;
+  cols = rows;
   return create(rows, cols, retIdent);
 }
 

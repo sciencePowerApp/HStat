@@ -155,50 +155,46 @@ class Linearalgebra
 				return Math.abs(value); 
 			});
   }
-/*
+
   // computes the p-norm of the vector
   // In the case that a matrix is passed, uses the first row as the vector
-  public static function norm(arr, p) {
-    var nnorm = 0,
-    i = 0;
-    // check the p-value of the norm, and set for most common case
-    if (isNaN(p)) p = 2;
-    // check if multi-dimensional array, and make vector correction
-    if (isArray(arr[0])) arr = arr[0];
+  public static function norm(arr:Matrix , p:Float=2):Float {
+    var nnorm:Float = 0;
     // vector norm
-    for (i in 0... arr.length) {
-      nnorm += Math.pow(Math.abs(arr[i]), p);
+    for (i in 0... arr[0].length) {
+      nnorm += Math.pow(Math.abs(arr[0][i]), p);
     }
     return Math.pow(nnorm, 1 / p);
   }
 
   // computes the angle between two vectors in rads
   // In case a matrix is passed, this uses the first row as the vector
-  public static function angle(arr, arg) {
-    return Math.acos(dot(arr, arg) / (jStat.norm(arr) * jStat.norm(arg)));
+  public static function angle(arr:Matrix, arg:Matrix):Float {
+    return Math.acos(dot(arr, arg) / (Linearalgebra.norm(arr) * Linearalgebra.norm(arg)));
   }
 
   // augment one matrix by another
   // Note: this function returns a matrix, not a jStat object
-  public static function aug(a, b) {
-    var newarr = [];
-    for (i in 0... a.length) {
-      newarr.push(a[i].slice());
+  public static function aug(a:Matrix, b:Matrix):Matrix {
+    var newarr = Vector.copy(a);
+    
+	for (i in 0... b.length) {
+		for (j in 0...b[0].length) {
+			newarr[i].push(b[i][j]);
+		}
     }
-    for (i in 0...  newarr.length) {
-      push.apply(newarr[i], b[i]);
-    }
+  
     return newarr;
   }
 
   // The inv() function calculates the inverse of a matrix
   // Create the inverse by augmenting the matrix by the identity matrix of the
   // appropriate size, and then use G-J elimination on the augmented matrix.
-  public static function inv(a) {
+  public static function inv(a:Matrix):Matrix {
     var rows = a.length;
     var cols = a[0].length;
-    var b = jStat.identity(rows, cols);
-    var c = jStat.gauss_jordan(a, b);
+    var b = HStat.identity(rows, cols);
+    var c = Linearalgebra.gauss_jordan(a, b);
     var result = [];
     var i = 0;
     var j;
@@ -213,17 +209,17 @@ class Linearalgebra
   }
 
   // calculate the determinant of a matrix
-  public static function det(a) {
-    var alen = a.length,
-    alend = alen * 2,
-    vals = new Array(alend),
-    rowshift = alen - 1,
-    colshift = alend - 1,
-    mrow = rowshift - alen + 1,
-    mcol = colshift,
-    i = 0,
-    result = 0,
-    j;
+  public static function det(a:Matrix):Float {
+    var alen:Int = a.length,
+    alend:Int = alen * 2,
+    vals = new Array<Float>(),
+    rowshift:Int = alen - 1,
+    colshift:Int = alend - 1,
+    mrow:Int = rowshift - alen + 1,
+    mcol:Int = colshift,
+    i:Int = 0,
+    result:Float = 0,
+    j:Int;
     // check for special 2x2 case
     if (alen == 2) {
       return a[0][0] * a[1][1] - a[0][1] * a[1][0];
@@ -250,56 +246,69 @@ class Linearalgebra
     return result;
   }
 
-  public static function gauss_elimination(a, b) {
-    var i = 0,
-    j = 0,
-    n = a.length,
-    m = a[0].length,
-    factor = 1,
-    sum = 0,
-    x = [],
-    maug, pivot, temp, k;
-    a = jStat.aug(a, b);
-    maug = a[0].length;
-    for(i in 0...n) {
-      pivot = a[i][i];
+  public static function gauss_elimination(a:Matrix, b:Matrix):Matrix {
+    var i:Int = 0,
+    j:Int = 0,
+    n:Int = a.length,
+    m:Int = a[0].length,
+    factor:Float = 1,
+    sum:Float = 0,
+    x:Array<Float> = new Array<Float>(),
+    pivot:Float, temp:Float, k:Int;
+    var _a:Matrix = Linearalgebra.aug(a, b);
+	var maug:Int = _a[0].length;
+	
+    for (i in 0...n) {
+		
+      pivot = _a[i][i];
       j = i;
       for (k in i + 1... m) {
-        if (pivot < Math.abs(a[k][i])) {
-          pivot = a[k][i];
+		  
+        if (pivot < Math.abs(_a[k][i])) {
+          pivot = _a[k][i];
           j = k;
         }
       }
       if (j != i) {
+		  
         for(k in 0... maug) {
-          temp = a[i][k];
-          a[i][k] = a[j][k];
-          a[j][k] = temp;
+          temp = _a[i][k];
+          _a[i][k] = _a[j][k];
+          _a[j][k] = temp;
         }
       }
       for (j in i + 1... n) {
-        factor = a[j][i] / a[i][i];
-        for(k in  i... maug) {
-          a[j][k] = a[j][k] - factor * a[i][k];
+        factor = _a[j][i] / _a[i][i];
+        for (k in  i... maug) {
+          _a[j][k] = _a[j][k] - factor * _a[i][k];
         }
       }
     }
+
 	i = n;
-	
     while (--i >= 0) {
       sum = 0;
-      for (j in i + 1...n - 1) {
-        sum = sum + x[j] * a[i][j];
-      }
-      x[i] =(a[i][maug - 1] - sum) / a[i][i];
-    }
-    return x;
-  }
+	  
+      for (j in i + 1...n) {
+        sum = sum + x[j] * _a[i][j];
 
-  public static function gauss_jordan(a, b) {
-    var m = jStat.aug(a, b),
-    h = m.length,
-    w = m[0].length;
+      }
+      x[i] =(_a[i][maug - 1] - sum) / _a[i][i];
+    }
+	
+	
+	
+    return [x];
+  }
+  
+
+
+  public static function gauss_jordan(a:Matrix, b:Matrix):Matrix {
+    var m:Matrix = Linearalgebra.aug(a, b);
+	var y:Int;
+    var h:Int = m.length;
+    var w:Int = m[0].length;
+	var c:Float;
     // find max pivot
     for (y in 0... h) {
       var maxrow = y;
@@ -318,9 +327,9 @@ class Linearalgebra
       }
     }
     // backsubstitute
-	var y:Int = h;
+	y = h-1;
 	var x:Int;
-    while (--h >= 0) {
+    while (--y >= 0) {
       c = m[y][y];
       for (y2 in 0... y) {
 		  x = w;
@@ -337,6 +346,7 @@ class Linearalgebra
     return m;
   }
 
+  /*
   public static function lu(a, b) {
     throw new Error('lu not yet implemented');
   }
@@ -382,7 +392,7 @@ class Linearalgebra
     }
     return xk;
   }
-
+  /
   public static function gauss_seidel(a, b, x, r) {
     var i = 0;
     var n = a.length;
