@@ -1,6 +1,61 @@
 package hstat;
 
-typedef Matrix = Array<Array<Float>>;
+//typedef Matrix = Array<Array<Float>>;
+typedef Array2D<T> = Array<Array<T>>;
+@:forward
+abstract Matrix(Array2D<Float>) from Array2D<Float> {
+	public function new() {
+		this = [];
+	}
+	
+	@:from static inline function fromIntArray(s:Array<Int>):Matrix {
+		return [s];
+	}
+	
+	@:from static inline function fromFloatArray(s:Array<Float>):Matrix {
+		return [s];
+	}
+	
+	@:from static inline function fromIntArray2D(s:Array<Array<Int>>):Matrix {
+		return cast s;
+	}
+	
+	@:from static inline function fromFloatArray2D(s:Array<Array<Float>>):Matrix {
+		return s;
+	}
+	
+	@:arrayAccess inline function get(k:Int) {
+		return this[k];
+	}
+	
+	@:arrayAccess inline function set(k:Int, v:Array<Float>) {
+		return this[k] = v;
+	}
+	
+	public inline function flatten():Array<Float> {
+		var r = new Array<Float>();
+		for (c in this) {
+			for (v in c) {
+				r.push(v);
+			}
+		}
+		return r;
+	}
+	
+	public static function create(rows:Int, cols:Null<Int> = null, func:Float->Float->Float):Matrix {
+		if (cols == null) cols = rows;
+		var res = new Matrix();
+		var i, j;
+
+		for (i in 0...rows) {
+			res[i] = new Array<Float>();
+			for(j in 0...cols)
+			res[i][j] = func(i, j);
+		}
+
+		return res;
+	}
+}
 
 class HStat
 {

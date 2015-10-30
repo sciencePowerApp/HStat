@@ -54,7 +54,6 @@ import hstat.tests.vector.Sumrow_test;
 import hstat.tests.vector.Sumsqerr_test;
 import hstat.tests.vector.Sumsqrd_test;
 import hstat.tests.vector.Variance_test;
-import openfl.system.System;
 import utest.Runner;
 import utest.ui.Report;
 import utest.ui.common.HeaderDisplayMode;
@@ -145,7 +144,7 @@ class Tests
 		Report.create(runner, NeverShowSuccessResults, AlwaysShowHeader);
 		
 		runner.onComplete.add(function(h) { 
-			System.exit(0);
+			Sys.exit(0);
 		} );
 		
 		
