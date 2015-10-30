@@ -1,26 +1,20 @@
 package;
 
-//import hstat.Core;
-
-import hstat.tests.Tests;
-import openfl.display.Sprite;
-import openfl.Lib;
+//import hstat.tests.Tests;
+import neko.Lib;
 
 /**
  * ...
  * @author 
  */
-class Main extends Sprite 
+class Main 
 {
-
-	public function new() 
+	
+	static function main() 
 	{
-		super();
-
-
 		#if debug
-			var tests:Tests = new Tests();
+			//var tests:Tests = new Tests();
 		#end
 	}
-
+	
 }
