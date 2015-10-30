@@ -7,7 +7,7 @@ class Cumprod_test{
 
     public function test_return_basic_cumprod() {
 
-      Assert.equals(Vector.cumprod([[1, 2, 3]]).toString(), [1, 2, 6].toString());
+      Assert.equals(Vector.cumprod([[1, 2, 3]])[0].toString(), [1, 2, 6].toString());
 	}
 	  
 /*

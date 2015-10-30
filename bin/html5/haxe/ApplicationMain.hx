@@ -90,7 +90,7 @@ class ApplicationMain {
 		
 		config = {
 			
-			build: "1431",
+			build: "1432",
 			company: "",
 			file: "HStat",
 			fps: 60,
@@ -132,7 +132,7 @@ class ApplicationMain {
 		
 		#if (js && html5)
 		#if (munit || utest)
-		openfl.Lib.embed (null, 800, 480, "null");
+		openfl.Lib.embed (null, 800, 480, "000000");
 		#end
 		#else
 		create ();

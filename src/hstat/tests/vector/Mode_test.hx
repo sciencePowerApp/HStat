@@ -6,7 +6,7 @@ class Mode_test{
 	public function new() { };
 
     public function test_return_basic_mode() {
-      Assert.equals(Vector.mode([[1, 2, 3, 3]]), 3);
+      Assert.equals(Vector.mode([[1, 2, 3, 3]])[0][0], 3);
 	}
 
 /*    public function test_mode_from_instance() {

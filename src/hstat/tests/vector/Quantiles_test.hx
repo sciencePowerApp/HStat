@@ -7,7 +7,7 @@ class Quantiles_test{
 
     public function test_return_basic_quantiles() {
       Assert.equals(Vector.quantiles([[1, 2, 3, 4, 5, 6]],
-                                       [[0.25, 0.5, 0.75]]).toString(),
+                                       [[0.25, 0.5, 0.75]])[0].toString(),
                                        [1.9375, 3.5, 5.0625].toString());
 	}
 
