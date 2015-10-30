@@ -1,0 +1,17 @@
+{
+    "name": "HStat",
+    "license": "MIT",
+    "tags": [
+        "math",
+        "statistics"
+    ],
+    "description": "Haxe port of Jstat",
+    "contributors": [
+        "andywoods"
+    ],
+    "releasenote": "",
+    "version": "1.0.0",
+    "url": "https://github.com/sciencePowerApp/HStat",
+    "dependencies": {
+    }
+}
