@@ -1,4 +1,5 @@
 package hstat;
+import hstat.Distribution.NekoCorrection;
 
 /**
  * ...
@@ -304,8 +305,11 @@ public static  function erf(x:Float) {
     dd = tmp;
 	j--;
   }
-
-  res = t * Math.exp(-x * x + 0.5 * (cof[0] + ty * d) - dd);
+  #if neko
+	res = t * NekoCorrection.exp(-x * x + 0.5 * (cof[0] + ty * d) - dd);
+  #else 
+	res = t * Math.exp(-x * x + 0.5 * (cof[0] + ty * d) - dd);
+  #end
   return isneg ? res - 1 : 1 - res;
 };
 

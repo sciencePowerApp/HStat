@@ -6,6 +6,14 @@ class Distribution
 
 }
 
+class NekoCorrection {
+	public static function exp(val:Float):Float{
+		if (val == Math.NEGATIVE_INFINITY) return 0;
+		else if (val == Math.POSITIVE_INFINITY) return Math.POSITIVE_INFINITY;
+		return  Math.exp(val);
+	}	
+}
+
 
 class Beta{
 
@@ -158,6 +166,12 @@ class Chisquare {
 public static function pdf(x:Float, dof):Float {
     if (x < 0)
       return 0;
+	#if neko
+		return (x == 0 && dof == 2) ? 0.5 :
+        NekoCorrection.exp((dof / 2 - 1) * Math.log(x) - x / 2 - (dof / 2) *
+                 Math.log(2) - Special.gammaln(dof / 2));
+	#end
+	//trace(Math.exp(Math.log(0)),Math.log(x),x);
     return (x == 0 && dof == 2) ? 0.5 :
         Math.exp((dof / 2 - 1) * Math.log(x) - x / 2 - (dof / 2) *
                  Math.log(2) - Special.gammaln(dof / 2));
@@ -317,6 +331,12 @@ class Kumaraswamy{
       return beta;
     else if (x == 1 && beta == 1)
       return alpha;
+	 
+	#if neko
+		return NekoCorrection.exp(Math.log(alpha) + Math.log(beta) + (alpha - 1) *
+                    Math.log(x) + (beta - 1) *
+                    Math.log(1 - Math.pow(x, alpha)));
+	#end
 	  
     return Math.exp(Math.log(alpha) + Math.log(beta) + (alpha - 1) *
                     Math.log(x) + (beta - 1) *

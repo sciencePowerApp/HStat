@@ -22,9 +22,8 @@ class Chisquare_test
     //   dchisq(0, 1)
     public function test_pdf_at_0() {
       var tol = 0.0000001;
-	  
       Assert.floatEquals(Chisquare.pdf(0.0, 5), 0.0,tol);
-      Assert.floatEquals(Chisquare.pdf(0.0, 2), 0.5,tol);
+      Assert.floatEquals(Chisquare.pdf(0.0, 2), 0.5, tol);
       Assert.equals(Chisquare.pdf(0.0, 1), Math.POSITIVE_INFINITY);
     }
 	

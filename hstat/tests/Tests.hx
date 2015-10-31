@@ -144,7 +144,7 @@ class Tests
 		Report.create(runner, NeverShowSuccessResults, AlwaysShowHeader);
 		
 		runner.onComplete.add(function(h) { 
-			Sys.exit(0);
+			//Sys.exit(0);
 		} );
 		
 		
